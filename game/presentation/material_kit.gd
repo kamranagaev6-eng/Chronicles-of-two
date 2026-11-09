@@ -7,6 +7,8 @@ extends RefCounted
 const KINDS: Dictionary[StringName, ShaderMaterial] = {
 	&"crypt_wall": preload("res://game/presentation/materials/crypt_wall.tres"),
 	&"crypt_stone": preload("res://game/presentation/materials/crypt_stone.tres"),
+	# Recessed joints behind separately modelled blocks: dark, fully rough, damp, mossy grit.
+	&"crypt_mortar": preload("res://game/presentation/materials/crypt_mortar.tres"),
 	&"crypt_floor": preload("res://game/presentation/materials/crypt_floor.tres"),
 	&"wood_planks": preload("res://game/presentation/materials/wood_planks.tres"),
 	&"wood_grain": preload("res://game/presentation/materials/wood_grain.tres"),

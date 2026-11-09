@@ -1,0 +1,262 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://game/presentation/materials/crypt_wall.tres" id="m_crypt_wall"]
+[ext_resource type="Material" path="res://game/presentation/materials/crypt_stone.tres" id="m_crypt_stone"]
+[ext_resource type="Material" path="res://game/presentation/materials/crypt_floor.tres" id="m_crypt_floor"]
+[ext_resource type="Material" path="res://game/presentation/materials/wood_planks.tres" id="m_wood_planks"]
+[ext_resource type="Material" path="res://game/presentation/materials/wood_grain.tres" id="m_wood_grain"]
+[ext_resource type="Material" path="res://game/presentation/materials/hair.tres" id="m_hair"]
+[ext_resource type="Material" path="res://game/presentation/materials/steel_worn.tres" id="m_steel_worn"]
+[ext_resource type="Material" path="res://game/presentation/materials/iron_rusted.tres" id="m_iron_rusted"]
+[ext_resource type="Material" path="res://game/presentation/materials/gilded.tres" id="m_gilded"]
+[ext_resource type="Material" path="res://game/presentation/materials/cloth.tres" id="m_cloth"]
+[ext_resource type="Material" path="res://game/presentation/materials/burlap.tres" id="m_burlap"]
+[ext_resource type="Material" path="res://game/presentation/materials/leather.tres" id="m_leather"]
+[ext_resource type="Material" path="res://game/presentation/materials/drowned_flesh.tres" id="m_drowned_flesh"]
+[ext_resource type="Material" path="res://game/presentation/materials/crypt_mortar.tres" id="m_crypt_mortar"]
+[ext_resource type="Material" path="res://game/presentation/materials/crypt_ground.tres" id="m_crypt_ground"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.035, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.32, 0.35, 0.46, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 3
+ssao_enabled = true
+ssr_enabled = true
+glow_enabled = true
+
+[sub_resource type="SphereMesh" id="sphere"]
+radius = 0.42
+height = 0.84
+radial_segments = 48
+rings = 24
+
+[sub_resource type="BoxMesh" id="cube"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="PlaneMesh" id="ground"]
+size = Vector2(24, 14)
+subdivide_width = 8
+subdivide_depth = 8
+
+[sub_resource type="BoxMesh" id="wall"]
+size = Vector3(14, 3.5, 0.6)
+
+[sub_resource type="CylinderMesh" id="pillar"]
+top_radius = 0.5
+bottom_radius = 0.6
+height = 4.2
+radial_segments = 24
+
+[node name="TextureGallery" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.41, 0.287, 0, 0.574, 0.819, -0.5, -0.709, 0.497, 0, 6, 0)
+light_color = Color(0.68, 0.74, 0.95, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Brazier" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.2, 2.6)
+light_color = Color(1, 0.62, 0.32, 1)
+light_energy = 2.4
+omni_range = 9.0
+shadow_enabled = true
+
+[node name="Brazier2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.0, 2.2)
+light_color = Color(1, 0.62, 0.32, 1)
+light_energy = 1.8
+omni_range = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.906, 0.423, 0, -0.423, 0.906, 0, 3.6, 7.2)
+fov = 55.0
+current = true
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("ground")
+surface_material_override/0 = ExtResource("m_crypt_ground")
+
+[node name="Wall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -2.2)
+mesh = SubResource("wall")
+surface_material_override/0 = ExtResource("m_crypt_wall")
+
+[node name="Pillar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.1, -0.8)
+mesh = SubResource("pillar")
+surface_material_override/0 = ExtResource("m_crypt_stone")
+
+[node name="Sphere_crypt_wall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_crypt_wall")
+
+[node name="Label_crypt_wall" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35, 0.02, 0.35)
+billboard = 1
+text = "crypt_wall"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_crypt_stone" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_crypt_stone")
+
+[node name="Label_crypt_stone" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0.02, 0.35)
+billboard = 1
+text = "crypt_stone"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_crypt_floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_crypt_floor")
+
+[node name="Label_crypt_floor" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 0.02, 0.35)
+billboard = 1
+text = "crypt_floor"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_wood_planks" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_wood_planks")
+
+[node name="Label_wood_planks" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0.35)
+billboard = 1
+text = "wood_planks"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_wood_grain" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_wood_grain")
+
+[node name="Label_wood_grain" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45, 0.02, 0.35)
+billboard = 1
+text = "wood_grain"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_hair" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_hair")
+
+[node name="Label_hair" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 0.02, 0.35)
+billboard = 1
+text = "hair"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_steel_worn" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 0.45, -0.2)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_steel_worn")
+
+[node name="Label_steel_worn" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 0.02, 0.35)
+billboard = 1
+text = "steel_worn"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_iron_rusted" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_iron_rusted")
+
+[node name="Label_iron_rusted" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35, 0.02, 1.95)
+billboard = 1
+text = "iron_rusted"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_gilded" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_gilded")
+
+[node name="Label_gilded" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0.02, 1.95)
+billboard = 1
+text = "gilded"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_cloth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_cloth")
+
+[node name="Label_cloth" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45, 0.02, 1.95)
+billboard = 1
+text = "cloth"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_burlap" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_burlap")
+
+[node name="Label_burlap" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 1.95)
+billboard = 1
+text = "burlap"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_leather" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_leather")
+
+[node name="Label_leather" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45, 0.02, 1.95)
+billboard = 1
+text = "leather"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_drowned_flesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_drowned_flesh")
+
+[node name="Label_drowned_flesh" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 0.02, 1.95)
+billboard = 1
+text = "drowned_flesh"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_crypt_mortar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_crypt_mortar")
+
+[node name="Label_crypt_mortar" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 0.02, 1.95)
+billboard = 1
+text = "crypt_mortar"
+font_size = 22
+outline_size = 6

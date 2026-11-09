@@ -43,7 +43,7 @@ func _ready() -> void:
 
 
 func _build_ground() -> void:
-	var floor_mat := ProcMesh.material(Color(0.36, 0.34, 0.37), 0.9)
+	var floor_mat := MaterialKit.surface(&"crypt_floor")
 	_static_box(Vector3(0, -0.5, 0), Vector3(60, 1, 60), floor_mat)
 	# Stairs: visual steps over an invisible ramp collider (characters never climb raw steps).
 	var steps := 6
@@ -51,11 +51,11 @@ func _build_ground() -> void:
 		var h := 0.2 * (i + 1)
 		var mesh := MeshInstance3D.new()
 		mesh.mesh = ProcMesh.box(Vector3(3.0, h, 0.5))
-		mesh.material_override = ProcMesh.material(Color(0.5, 0.46, 0.42), 0.85)
+		mesh.material_override = MaterialKit.surface(&"crypt_stone", Color.WHITE, {&"waterline": 0.0, &"brightness": 1.6})
 		mesh.position = Vector3(-8, h * 0.5, -2.0 - i * 0.5)
 		add_child(mesh)
 	_ramp(Vector3(-8, 0.6, -3.25), Vector3(3.0, 0.05, 3.25), deg_to_rad(20.3), false)
-	_static_box(Vector3(-8, 0.6, -6.5), Vector3(3.0, 1.2, 3.5), ProcMesh.material(Color(0.45, 0.42, 0.4), 0.85))
+	_static_box(Vector3(-8, 0.6, -6.5), Vector3(3.0, 1.2, 3.5), MaterialKit.surface(&"crypt_wall"))
 	# Slopes at 15, 30 and 45 degrees.
 	var x := 0.0
 	for angle: float in [15.0, 30.0, 45.0]:
@@ -67,7 +67,7 @@ func _build_ground() -> void:
 		label.font_size = 64
 		add_child(label)
 		x += 4.0
-	_static_box(Vector3(14, 1.5, 0), Vector3(1, 3, 10), ProcMesh.material(Color(0.3, 0.28, 0.33), 0.9))
+	_static_box(Vector3(14, 1.5, 0), Vector3(1, 3, 10), MaterialKit.surface(&"crypt_wall"))
 
 
 func _static_box(center: Vector3, size: Vector3, mat: Material) -> void:
@@ -97,7 +97,7 @@ func _ramp(center: Vector3, size: Vector3, angle: float, visible_mesh: bool) -> 
 	if visible_mesh:
 		var mesh := MeshInstance3D.new()
 		mesh.mesh = ProcMesh.box(size)
-		mesh.material_override = ProcMesh.material(Color(0.48, 0.44, 0.4), 0.85)
+		mesh.material_override = MaterialKit.surface(&"crypt_stone", Color.WHITE, {&"waterline": 0.0, &"brightness": 1.6})
 		body.add_child(mesh)
 	add_child(body)
 
@@ -158,7 +158,7 @@ func _build_showcase() -> void:
 		_showcase.append(model)
 		var helmet := MeshInstance3D.new()
 		helmet.mesh = ProcMesh.cylinder(0.19, 0.2, 0.25)
-		helmet.material_override = ProcMesh.material(Color(0.55, 0.55, 0.6), 0.35, 0.7)
+		helmet.material_override = MaterialKit.surface(&"steel_worn")
 		helmet.position = Vector3(0, 1.74, 0)
 		helmet.visible = false
 		model.get_node("Body").add_child(helmet)
@@ -297,7 +297,7 @@ func _bone(root: Node3D, pos: Vector3, size: Vector3) -> RigidBody3D:
 	b.add_child(shape)
 	var mesh := MeshInstance3D.new()
 	mesh.mesh = ProcMesh.box(size)
-	mesh.material_override = ProcMesh.material(Color(0.4, 0.5, 0.45), 0.8)
+	mesh.material_override = MaterialKit.surface(&"drowned_flesh", Color(0.4, 0.5, 0.45))
 	b.add_child(mesh)
 	root.add_child(b)
 	b.global_position = pos

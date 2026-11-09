@@ -75,3 +75,16 @@ fires during traversal, Chronicle pages as collectibles, loot that suits the new
 Opus is implementing the camera, controls, light combos, heavy attack (replacing the shove), block and
 parry, finishers and the throw-and-recall weapons now, then resuming the Sunken Crypt with throw puzzles.
 The Opus claim above extends to `game/autoload/settings.gd` (new default bindings).
+
+---
+
+## Photoscan textures and materials (session "Realistic asset textures", 2026-11-09)
+
+The owner approved CC0 photoscanned textures with layered weathering. This session maintains:
+
+- `assets/textures/ambientcg/*`: 10 ambientCG CC0 sets at 1K. `tools/fetch_textures.ps1` downloads them and keeps only the maps used; `-LedgerOnly` rewrites their rows in `docs/license_ledger.csv` (asset ids start `acg_`), including the `.import` sidecars.
+- `game/presentation/material_kit.gd` and `game/presentation/materials/*.tres`: build new visuals with `MaterialKit.surface(kind, tint, overrides)`, `MaterialKit.trim(accent)` and `MaterialKit.skin(color)` rather than flat colours. Ask here for a new surface kind.
+- `game/presentation/shaders/pbr_triplanar.gdshader` and `ground_surface.gdshader`.
+- Only the material lines in `proc_mesh.gd`, `arena_builder.gd`, `surface_layer.gd` and the `asset_test.gd` floor. The camera, combat, hero and enemy visuals, `presentation.gd`, `hud.gd` and the lighting/Environment in `arena_builder._lights()` belong to other sessions.
+- Review scenes: `game/scenes/asset_test/arena_showcase.tscn` (the real Drowned Hall with every surface painted and the whole cast posed, fixed cameras 1-5 via `--showcase-camera=N`, independent of the gameplay camera) and `texture_gallery.tscn` (every material on a sphere; opening it in the editor marks new textures as 3D so they get mipmaps). The wall set is now Bricks113A (ashlar); Bricks108B was removed. `ArenaBuilder.pbr_material()` is no longer called, so it can go.
+- 2026-11-09 follow-up: `MaterialKit.surface(&"crypt_mortar")` is the recessed-joint material for separately modelled blocks (world-space, dark, fully rough, damp, mossy). `ground_surface.gdshader` now has `emission_cap` (default 0.6 luminance): no surface glow outshines an enemy telegraph, and the stone stays visible through ice, Electrified water and fire.
