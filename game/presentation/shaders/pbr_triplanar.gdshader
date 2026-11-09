@@ -47,6 +47,8 @@ uniform float edge_wear : hint_range(0.0, 1.0) = 0.0;
 group_uniforms glow;
 uniform vec3 emission_color : source_color = vec3(0.0);
 uniform float emission_energy = 0.0;
+// 0 = even glow; 1 = only the cracks and crevices of the relief glow (runes, embers, magic veins).
+uniform float glow_in_cracks : hint_range(0.0, 1.0) = 0.0;
 
 varying vec3 v_obj_pos;
 varying vec3 v_obj_normal;
@@ -92,9 +94,7 @@ float fbm(vec3 p) {
 	return total;
 }
 
-vec4 tri(sampler2D tex, vec2 ux, vec2 uy, vec2 uz, vec3 w) {
-	return texture(tex, ux) * w.x + texture(tex, uy) * w.y + texture(tex, uz) * w.z;
-}
+#define TRI(tex, ux, uy, uz, w) (texture(tex, ux) * (w).x + texture(tex, uy) * (w).y + texture(tex, uz) * (w).z)
 
 // One plane's contribution to the whiteout-blended normal. Maps are OpenGL style (green points up
 // the image); v points down it, so green is flipped. Only RG is read, so the result is the same
@@ -124,10 +124,10 @@ void fragment() {
 	vec2 uy = vec2(dot(ps, UY), dot(ps, VY));
 	vec2 uz = vec2(dot(ps, UZ), dot(ps, VZ)) + vec2(0.71, 0.53);
 
-	vec3 col = tri(albedo_tex, ux, uy, uz, w).rgb;
-	float rough = tri(roughness_tex, ux, uy, uz, w).r;
-	float ao = tri(ao_tex, ux, uy, uz, w).r;
-	float metal = use_metal_tex ? tri(metal_tex, ux, uy, uz, w).r : metallic_value;
+	vec3 col = TRI(albedo_tex, ux, uy, uz, w).rgb;
+	float rough = TRI(roughness_tex, ux, uy, uz, w).r;
+	float ao = TRI(ao_tex, ux, uy, uz, w).r;
+	float metal = use_metal_tex ? TRI(metal_tex, ux, uy, uz, w).r : metallic_value;
 	vec3 nn = normalize(
 		plane_normal(texture(normal_tex, ux).rg, n, AX, UX, VX) * w.x
 		+ plane_normal(texture(normal_tex, uy).rg, n, AY, UY, VY) * w.y
@@ -138,12 +138,14 @@ void fragment() {
 	col = mix(col, tint.rgb * (lum / albedo_mean) * brightness, tint_strength);
 	col *= mix(1.0, ao, cavity_darkening);
 
-	// Large-scale drift in world space: brightness and a warm/cool shift that hide the repeat.
+	// Large-scale drift: brightness and a warm/cool shift that hide the repeat. Weathering noise uses
+	// the projection position so it sticks to moving parts; heights (grime, waterline) use world Y.
 	vec3 wp = v_world_pos;
+	vec3 np = p;
 	vec3 wn = world_space ? n : normalize((MODEL_MATRIX * vec4(n, 0.0)).xyz);
-	float macro = fbm(wp * macro_scale);
+	float macro = fbm(np * macro_scale);
 	col *= 1.0 + (macro - 0.5) * 2.0 * macro_strength;
-	float warm = smoothstep(0.4, 0.75, fbm(wp * macro_scale * 0.6 + vec3(11.0)));
+	float warm = smoothstep(0.4, 0.75, fbm(np * macro_scale * 0.6 + vec3(11.0)));
 	col = mix(col, col * vec3(1.08, 1.0, 0.9), warm * macro_strength);
 
 	// Edge wear: the raised parts of the relief (bright AO, strong normal tilt) are polished lighter.
@@ -158,11 +160,11 @@ void fragment() {
 	// Moss settles on upward faces and in the crevices, in clumps.
 	if (moss > 0.0) {
 		float up = smoothstep(0.25, 0.9, wn.y);
-		float clump = smoothstep(0.42, 0.68, fbm(wp * 1.4 + vec3(3.0)));
+		float clump = smoothstep(0.42, 0.68, fbm(np * 1.4 + vec3(3.0)));
 		float crevice = clamp((1.0 - ao) * 2.0, 0.0, 1.0);
 		float low = 1.0 - smoothstep(0.0, 1.2, wp.y);
 		float m = clamp((up * 0.9 + crevice + low * 0.6) * clump * moss * 1.4, 0.0, 1.0);
-		vec3 moss_col = moss_color * (0.55 + 0.9 * vnoise(wp * 11.0));
+		vec3 moss_col = moss_color * (0.55 + 0.9 * vnoise(np * 11.0));
 		col = mix(col, moss_col, m);
 		rough = mix(rough, 0.95, m);
 		nn = normalize(mix(nn, n, m * 0.5));
@@ -170,7 +172,7 @@ void fragment() {
 
 	// Soot and mud around the base.
 	if (grime_height > 0.0) {
-		float h = wp.y + (fbm(wp * 2.2) - 0.5) * grime_height;
+		float h = wp.y + (fbm(np * 2.2) - 0.5) * grime_height;
 		float g = 1.0 - smoothstep(0.0, grime_height, h);
 		col = mix(col, grime_color * (0.6 + lum), g * 0.85);
 		rough = mix(rough, 1.0, g * 0.3);
@@ -180,12 +182,12 @@ void fragment() {
 	float wet = 0.0;
 	if (damp > 0.0) {
 		float vertical = 1.0 - abs(wn.y);
-		float streak = smoothstep(0.5, 0.78, fbm(vec3(wp.x * 2.6, wp.y * 0.22, wp.z * 2.6)));
-		float top_seep = smoothstep(0.55, 0.8, fbm(vec3(wp.x * 1.3, 4.0, wp.z * 1.3)));
+		float streak = smoothstep(0.5, 0.78, fbm(vec3(np.x * 2.6, np.y * 0.22, np.z * 2.6)));
+		float top_seep = smoothstep(0.55, 0.8, fbm(vec3(np.x * 1.3, 4.0, np.z * 1.3)));
 		wet = max(wet, streak * vertical * damp * (0.6 + 0.4 * top_seep));
 	}
 	if (waterline > 0.0) {
-		float jitter = (vnoise(wp * 2.7) - 0.5) * 0.18;
+		float jitter = (vnoise(np * 2.7) - 0.5) * 0.18;
 		float band = 1.0 - smoothstep(waterline * 0.55, waterline, wp.y + jitter);
 		wet = max(wet, band);
 		float tide = 1.0 - smoothstep(0.0, 0.06, abs(wp.y + jitter - waterline - 0.05));
@@ -201,5 +203,5 @@ void fragment() {
 	AO_LIGHT_AFFECT = 0.15;
 	vec3 world_nn = world_space ? nn : normalize((MODEL_MATRIX * vec4(nn, 0.0)).xyz);
 	NORMAL = normalize((VIEW_MATRIX * vec4(world_nn, 0.0)).xyz);
-	EMISSION = emission_color * emission_energy;
+	EMISSION = emission_color * emission_energy * mix(1.0, clamp((1.0 - ao) * 4.0, 0.0, 1.0), glow_in_cracks);
 }

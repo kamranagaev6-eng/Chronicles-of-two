@@ -17,4 +17,6 @@ shader_parameter/use_metal_tex = true
 shader_parameter/tiles_per_metre = 1.0
 shader_parameter/albedo_mean = 0.18
 shader_parameter/macro_strength = 0.2
+shader_parameter/saturation = 0.8
+shader_parameter/brightness = 0.85
 shader_parameter/damp = 0.2

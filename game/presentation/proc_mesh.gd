@@ -103,23 +103,24 @@ static func cylinder(top: float, bottom: float, height: float) -> CylinderMesh:
 ## A hero: body, head, hair, cloak and class kit. Returns the root; named parts are animated by HeroVisual.
 static func build_hero(class_id: StringName, accent: Color) -> Node3D:
 	var root := Node3D.new()
-	var skin := material(Color(0.86, 0.68, 0.56), 0.7)
-	var cloth := material(accent.darkened(0.45), 0.85)
-	var trim := emissive(accent, accent, 0.35)
+	var skin := MaterialKit.skin(Color(0.86, 0.68, 0.56))
+	var cloth := MaterialKit.surface(&"cloth", accent.darkened(0.55))
+	var trim := MaterialKit.trim(accent)
 	var body := Node3D.new()
 	body.name = "Body"
 	root.add_child(body)
-	var torso_mat := material(Color(0.55, 0.55, 0.6), 0.45, 0.55) if class_id == &"vanguard" else cloth
+	var torso_mat: Material = MaterialKit.surface(&"steel_worn") if class_id == &"vanguard" else MaterialKit.surface(&"cloth", accent.darkened(0.4))
 	part(body, "Torso", capsule(0.3, 1.05), torso_mat, Vector3(0, 1.05, 0))
 	part(body, "Belt", cylinder(0.31, 0.31, 0.08), trim, Vector3(0, 0.82, 0))
 	part(body, "LegL", capsule(0.11, 0.8), cloth, Vector3(-0.13, 0.42, 0))
 	part(body, "LegR", capsule(0.11, 0.8), cloth, Vector3(0.13, 0.42, 0))
 	var head := part(body, "Head", sphere(0.17), skin, Vector3(0, 1.68, 0))
-	part(head, "Hair", sphere(0.18), material(Color(0.32, 0.2, 0.14) if class_id == &"vanguard" else Color(0.85, 0.82, 0.92), 0.9), Vector3(0, 0.05, -0.04))
-	part(head, "EyeL", sphere(0.025), material(Color(0.1, 0.1, 0.12)), Vector3(-0.06, 0.02, 0.15))
-	part(head, "EyeR", sphere(0.025), material(Color(0.1, 0.1, 0.12)), Vector3(0.06, 0.02, 0.15))
+	var hair_color := Color(0.32, 0.2, 0.14) if class_id == &"vanguard" else Color(0.85, 0.82, 0.92)
+	part(head, "Hair", sphere(0.18), MaterialKit.surface(&"hair", hair_color), Vector3(0, 0.05, -0.04))
+	part(head, "EyeL", sphere(0.025), material(Color(0.1, 0.1, 0.12), 0.2), Vector3(-0.06, 0.02, 0.15))
+	part(head, "EyeR", sphere(0.025), material(Color(0.1, 0.1, 0.12), 0.2), Vector3(0.06, 0.02, 0.15))
 	var cloak := part(body, "Cloak", box(Vector3(0.62, 0.95, 0.05)), cloth, Vector3(0, 1.05, -0.3), Vector3(8, 0, 0))
-	cloak.material_override = material(accent.darkened(0.25), 0.9)
+	cloak.material_override = MaterialKit.surface(&"cloth", accent.darkened(0.25), {&"grime_height": 0.6})
 	var arm_l := Node3D.new()
 	arm_l.name = "ArmL"
 	arm_l.position = Vector3(-0.38, 1.42, 0)
@@ -132,15 +133,19 @@ static func build_hero(class_id: StringName, accent: Color) -> Node3D:
 	part(arm_r, "Sleeve", capsule(0.09, 0.62), torso_mat, Vector3(0, -0.28, 0))
 	if class_id == &"vanguard":
 		part(body, "Pauldron", box(Vector3(0.9, 0.14, 0.42)), trim, Vector3(0, 1.48, 0))
-		var sword := part(arm_r, "Weapon", box(Vector3(0.07, 1.05, 0.14)), material(Color(0.86, 0.88, 0.95), 0.25, 0.9), Vector3(0, -0.55, 0.42), Vector3(90, 0, 0))
+		var blade := MaterialKit.surface(&"steel_worn", Color.WHITE, {&"brightness": 2.4, &"roughness_scale": 0.45, &"tiles_per_metre": 2.5})
+		var sword := part(arm_r, "Weapon", box(Vector3(0.07, 1.05, 0.14)), blade, Vector3(0, -0.55, 0.42), Vector3(90, 0, 0))
 		part(sword, "Guard", box(Vector3(0.32, 0.06, 0.08)), trim, Vector3(0, -0.45, 0))
-		part(arm_l, "Shield", cylinder(0.36, 0.36, 0.07), material(Color(0.45, 0.42, 0.5), 0.4, 0.6), Vector3(-0.08, -0.35, 0.22), Vector3(0, 0, 90))
+		part(sword, "Grip", cylinder(0.025, 0.025, 0.22), MaterialKit.surface(&"leather"), Vector3(0, -0.6, 0))
+		var shield := part(arm_l, "Shield", cylinder(0.36, 0.36, 0.07), MaterialKit.surface(&"wood_planks", Color.WHITE, {&"tiles_per_metre": 1.6}), Vector3(-0.08, -0.35, 0.22), Vector3(0, 0, 90))
+		# Child of the shield so it hides with it while the shield is thrown.
+		part(shield, "Rim", cylinder(0.375, 0.375, 0.05), MaterialKit.surface(&"iron_rusted"), Vector3.ZERO)
 		part(arm_l, "ShieldBoss", sphere(0.1), trim, Vector3(-0.13, -0.35, 0.22))
 	else:
-		var staff := part(arm_r, "Weapon", cylinder(0.03, 0.04, 1.7), material(Color(0.35, 0.24, 0.18), 0.8), Vector3(0, -0.35, 0.18))
+		var staff := part(arm_r, "Weapon", cylinder(0.03, 0.04, 1.7), MaterialKit.surface(&"wood_grain"), Vector3(0, -0.35, 0.18))
 		part(staff, "Orb", sphere(0.12), emissive(accent.lightened(0.3), accent, 2.5), Vector3(0, 0.92, 0))
 		part(body, "Hood", sphere(0.21), cloth, Vector3(0, 1.72, -0.05))
-		part(body, "Book", box(Vector3(0.22, 0.28, 0.08)), trim, Vector3(-0.3, 0.9, 0.05))
+		part(body, "Book", box(Vector3(0.22, 0.28, 0.08)), MaterialKit.surface(&"leather", accent.darkened(0.3), {&"tint_strength": 0.6}), Vector3(-0.3, 0.9, 0.05))
 	var shadow := MeshInstance3D.new()
 	shadow.name = "Blob"
 	var disc := CylinderMesh.new()
@@ -163,26 +168,31 @@ static func build_enemy(def: EnemyDefinition) -> Node3D:
 	root.add_child(body)
 	var scale := def.height / 1.8
 	body.scale = Vector3(scale, scale, scale)
-	var flesh := material(def.body_color, 0.85)
+	var flesh := MaterialKit.surface(&"drowned_flesh", def.body_color)
 	var accent := emissive(def.accent_color, def.accent_color, 1.6)
 	match def.id:
 		&"training_dummy":
-			part(body, "Post", cylinder(0.08, 0.1, 1.9), material(Color(0.42, 0.3, 0.2)), Vector3(0, 0.95, 0))
-			part(body, "Torso", capsule(0.32, 0.9), material(Color(0.78, 0.66, 0.42), 0.95), Vector3(0, 1.15, 0))
-			part(body, "Head", sphere(0.2), material(Color(0.78, 0.66, 0.42), 0.95), Vector3(0, 1.75, 0))
-			part(body, "Arms", box(Vector3(1.2, 0.1, 0.1)), material(Color(0.42, 0.3, 0.2)), Vector3(0, 1.35, 0))
+			var post := MaterialKit.surface(&"wood_grain")
+			var sack := MaterialKit.surface(&"burlap")
+			part(body, "Post", cylinder(0.08, 0.1, 1.9), post, Vector3(0, 0.95, 0))
+			part(body, "Torso", capsule(0.32, 0.9), sack, Vector3(0, 1.15, 0))
+			part(body, "Head", sphere(0.2), sack, Vector3(0, 1.75, 0))
+			part(body, "Arms", box(Vector3(1.2, 0.1, 0.1)), post, Vector3(0, 1.35, 0))
+			part(body, "Rope", cylinder(0.33, 0.33, 0.05), MaterialKit.surface(&"burlap", Color(0.55, 0.45, 0.3), {&"tint_strength": 0.5, &"tiles_per_metre": 4.0}), Vector3(0, 1.35, 0))
 		&"oil_barrel", &"water_barrel":
-			var c := Color(0.3, 0.22, 0.15) if def.id == &"oil_barrel" else Color(0.35, 0.3, 0.24)
-			part(body, "Barrel", cylinder(0.36, 0.4, 0.95), material(c, 0.8), Vector3(0, 0.48, 0))
-			var band_col := Color(0.15, 0.13, 0.12) if def.id == &"oil_barrel" else Color(0.25, 0.45, 0.6)
-			part(body, "Band", cylinder(0.41, 0.41, 0.08), material(band_col, 0.5, 0.6), Vector3(0, 0.3, 0))
-			part(body, "Band2", cylinder(0.39, 0.39, 0.08), material(band_col, 0.5, 0.6), Vector3(0, 0.75, 0))
+			var oil := def.id == &"oil_barrel"
+			var staves := MaterialKit.surface(&"wood_planks", Color.WHITE, {&"brightness": 0.75 if oil else 1.3, &"damp": 0.2 if oil else 0.7})
+			part(body, "Barrel", cylinder(0.36, 0.4, 0.95), staves, Vector3(0, 0.48, 0))
+			var bands := MaterialKit.surface(&"iron_rusted") if oil else MaterialKit.surface(&"steel_worn", Color(0.25, 0.45, 0.6), {&"tint_strength": 0.45})
+			part(body, "Band", cylinder(0.41, 0.41, 0.08), bands, Vector3(0, 0.3, 0))
+			part(body, "Band2", cylinder(0.39, 0.39, 0.08), bands, Vector3(0, 0.75, 0))
+			part(body, "Lid", cylinder(0.33, 0.33, 0.03), staves, Vector3(0, 0.96, 0))
 		_:
 			var hunch := 12.0 if def.id == &"drowned_thrall" else 0.0
 			part(body, "Torso", capsule(0.3 if def.id != &"crypt_archer" else 0.24, 1.0), flesh, Vector3(0, 1.0, 0), Vector3(hunch, 0, 0))
 			part(body, "LegL", capsule(0.1, 0.8), flesh, Vector3(-0.13, 0.4, 0))
 			part(body, "LegR", capsule(0.1, 0.8), flesh, Vector3(0.13, 0.4, 0))
-			var head := part(body, "Head", sphere(0.17), material(def.body_color.lightened(0.15), 0.8), Vector3(0, 1.62, 0.08 if hunch > 0.0 else 0.0))
+			var head := part(body, "Head", sphere(0.17), MaterialKit.surface(&"drowned_flesh", def.body_color.lightened(0.15)), Vector3(0, 1.62, 0.08 if hunch > 0.0 else 0.0))
 			part(head, "EyeL", sphere(0.035), accent, Vector3(-0.06, 0.02, 0.14))
 			part(head, "EyeR", sphere(0.035), accent, Vector3(0.06, 0.02, 0.14))
 			var arm_l := Node3D.new()
@@ -197,18 +207,19 @@ static func build_enemy(def: EnemyDefinition) -> Node3D:
 			part(arm_r, "Sleeve", capsule(0.08, 0.66), flesh, Vector3(0, -0.3, 0))
 			match def.id:
 				&"drowned_thrall":
-					part(arm_r, "Weapon", box(Vector3(0.06, 0.7, 0.12)), material(Color(0.4, 0.42, 0.38), 0.5, 0.5), Vector3(0, -0.6, 0.25), Vector3(70, 0, 0))
-					part(body, "Rags", box(Vector3(0.66, 0.5, 0.06)), material(Color(0.2, 0.26, 0.24)), Vector3(0, 0.75, 0.22))
+					part(arm_r, "Weapon", box(Vector3(0.06, 0.7, 0.12)), MaterialKit.surface(&"iron_rusted", Color.WHITE, {&"tiles_per_metre": 2.0}), Vector3(0, -0.6, 0.25), Vector3(70, 0, 0))
+					part(body, "Rags", box(Vector3(0.66, 0.5, 0.06)), MaterialKit.surface(&"cloth", Color(0.2, 0.26, 0.24), {&"damp": 0.8, &"moss": 0.4}), Vector3(0, 0.75, 0.22))
 				&"crypt_archer":
-					part(arm_l, "Weapon", cylinder(0.025, 0.025, 1.3), material(Color(0.45, 0.32, 0.2)), Vector3(0, -0.35, 0.3), Vector3(10, 0, 0))
-					part(body, "Quiver", cylinder(0.08, 0.08, 0.6), material(Color(0.3, 0.2, 0.12)), Vector3(0.15, 1.2, -0.25), Vector3(20, 0, 0))
-					part(body, "Hood", sphere(0.2), material(Color(0.3, 0.27, 0.22), 0.9), Vector3(0, 1.66, -0.03))
+					part(arm_l, "Weapon", cylinder(0.025, 0.025, 1.3), MaterialKit.surface(&"wood_grain", Color.WHITE, {&"tiles_per_metre": 2.5}), Vector3(0, -0.35, 0.3), Vector3(10, 0, 0))
+					part(body, "Quiver", cylinder(0.08, 0.08, 0.6), MaterialKit.surface(&"leather"), Vector3(0.15, 1.2, -0.25), Vector3(20, 0, 0))
+					part(body, "Hood", sphere(0.2), MaterialKit.surface(&"cloth", Color(0.3, 0.27, 0.22), {&"damp": 0.5}), Vector3(0, 1.66, -0.03))
 				&"drowned_knight":
-					part(body, "Pauldrons", box(Vector3(1.0, 0.2, 0.5)), material(Color(0.32, 0.36, 0.42), 0.35, 0.7), Vector3(0, 1.45, 0))
-					part(body, "Helm", cylinder(0.19, 0.21, 0.32), material(Color(0.32, 0.36, 0.42), 0.35, 0.7), Vector3(0, 1.7, 0))
+					var armour := MaterialKit.surface(&"steel_worn", Color(0.32, 0.36, 0.42), {&"tint_strength": 0.35, &"moss": 0.45, &"damp": 0.6, &"brightness": 1.2})
+					part(body, "Pauldrons", box(Vector3(1.0, 0.2, 0.5)), armour, Vector3(0, 1.45, 0))
+					part(body, "Helm", cylinder(0.19, 0.21, 0.32), armour, Vector3(0, 1.7, 0))
 					part(body, "Visor", box(Vector3(0.24, 0.04, 0.05)), accent, Vector3(0, 1.72, 0.2))
-					part(arm_l, "Shield", box(Vector3(0.12, 1.0, 0.7)), material(Color(0.28, 0.3, 0.34), 0.4, 0.6), Vector3(-0.1, -0.35, 0.25))
-					part(arm_r, "Weapon", box(Vector3(0.2, 0.9, 0.2)), material(Color(0.3, 0.3, 0.32), 0.5, 0.7), Vector3(0, -0.7, 0.2), Vector3(60, 0, 0))
+					part(arm_l, "Shield", box(Vector3(0.12, 1.0, 0.7)), MaterialKit.surface(&"steel_worn", Color(0.28, 0.3, 0.34), {&"tint_strength": 0.4, &"moss": 0.55, &"damp": 0.7}), Vector3(-0.1, -0.35, 0.25))
+					part(arm_r, "Weapon", box(Vector3(0.2, 0.9, 0.2)), MaterialKit.surface(&"iron_rusted"), Vector3(0, -0.7, 0.2), Vector3(60, 0, 0))
 	var shadow := MeshInstance3D.new()
 	shadow.name = "Blob"
 	var disc := CylinderMesh.new()

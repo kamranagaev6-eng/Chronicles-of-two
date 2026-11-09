@@ -16,3 +16,4 @@ shader_parameter/albedo_mean = 0.025
 shader_parameter/brightness = 1.6
 shader_parameter/macro_strength = 0.15
 shader_parameter/edge_wear = 0.3
+shader_parameter/normal_depth = 1.8

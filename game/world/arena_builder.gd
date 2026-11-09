@@ -1,6 +1,6 @@
 class_name ArenaBuilder
 extends RefCounted
-## Builds the graybox crypt from ArenaLayout: collision, storybook-toned meshes and lighting.
+## Builds the crypt from ArenaLayout: collision, photoscanned stone and iron (MaterialKit) and lighting.
 ## Uses ambientCG CC0 photoscanned PBR materials for God of War-level tactile stone and metal.
 
 static var _pbr_cache: Dictionary = {}
@@ -39,8 +39,10 @@ static func pbr_material(set_name: String, uv_scale: Vector3 = Vector3.ONE, trip
 
 
 static func build(root: Node3D, headless: bool) -> void:
-	var stone: Material = pbr_material("Rock058", Vector3(0.4, 0.4, 0.4), true) if not headless else ProcMesh.material(Color(0.42, 0.39, 0.42), 0.92)
-	var dark_stone: Material = pbr_material("Bricks108B", Vector3(0.35, 0.35, 0.35), true) if not headless else ProcMesh.material(Color(0.30, 0.28, 0.33), 0.95)
+	# Layered photoscan materials (MaterialKit): world-space triplanar maps plus moss, damp streaks,
+	# grime and a drowned waterline at the base.
+	var stone: Material = MaterialKit.surface(&"crypt_stone")
+	var masonry: Material = MaterialKit.surface(&"crypt_wall")
 	var size := ArenaLayout.SIZE
 	var o := ArenaLayout.ORIGIN
 	# Floor collision (the visible floor is the surface layer's ground mesh).
@@ -48,17 +50,17 @@ static func build(root: Node3D, headless: bool) -> void:
 	# Perimeter walls.
 	var t := ArenaLayout.WALL_THICKNESS
 	var h := ArenaLayout.WALL_HEIGHT
-	_box(root, "WallN", Vector3(0, h * 0.5, o.y - t * 0.5), Vector3(size.x + t * 2.0, h, t), dark_stone)
-	_box(root, "WallS", Vector3(0, h * 0.5, o.y + size.y + t * 0.5), Vector3(size.x + t * 2.0, h, t), dark_stone)
-	_box(root, "WallW", Vector3(o.x - t * 0.5, h * 0.5, 0), Vector3(t, h, size.y), dark_stone)
-	_box(root, "WallE", Vector3(o.x + size.x + t * 0.5, h * 0.5, 0), Vector3(t, h, size.y), dark_stone)
+	_box(root, "WallN", Vector3(0, h * 0.5, o.y - t * 0.5), Vector3(size.x + t * 2.0, h, t), masonry)
+	_box(root, "WallS", Vector3(0, h * 0.5, o.y + size.y + t * 0.5), Vector3(size.x + t * 2.0, h, t), masonry)
+	_box(root, "WallW", Vector3(o.x - t * 0.5, h * 0.5, 0), Vector3(t, h, size.y), masonry)
+	_box(root, "WallE", Vector3(o.x + size.x + t * 0.5, h * 0.5, 0), Vector3(t, h, size.y), masonry)
 	for i in ArenaLayout.PILLARS.size():
 		var p: Vector3 = ArenaLayout.PILLARS[i]
 		_pillar(root, "Pillar%d" % i, p, ArenaLayout.PILLAR_RADIUS, 4.2, stone)
 	for i in ArenaLayout.BLOCKS.size():
 		var b: Array = ArenaLayout.BLOCKS[i]
 		var s: Vector3 = b[1]
-		_box(root, "Ruin%d" % i, (b[0] as Vector3) + Vector3(0, s.y * 0.5, 0), s, stone)
+		_box(root, "Ruin%d" % i, (b[0] as Vector3) + Vector3(0, s.y * 0.5, 0), s, masonry)
 	# Waystone: the checkpoint obelisk.
 	var ws := Node3D.new()
 	ws.name = "Waystone"
@@ -71,14 +73,18 @@ static func build(root: Node3D, headless: bool) -> void:
 	pm.height = 0.25
 	plinth.mesh = pm
 	plinth.position.y = 0.12
-	plinth.material_override = pbr_material("Rock058", Vector3(1, 1, 1), true) if not headless else ProcMesh.material(Color(0.5, 0.46, 0.4), 0.8)
+	plinth.material_override = MaterialKit.surface(&"crypt_stone", Color.WHITE, {&"waterline": 0.0, &"grime_height": 0.0, &"moss": 0.15, &"edge_wear": 0.7, &"brightness": 1.6})
 	ws.add_child(plinth)
 	var obelisk := MeshInstance3D.new()
 	var om := PrismMesh.new()
 	om.size = Vector3(0.7, 2.4, 0.7)
 	obelisk.mesh = om
 	obelisk.position.y = 1.45
-	obelisk.material_override = ProcMesh.emissive(Color(0.55, 0.75, 0.95), Color(0.35, 0.65, 1.0), 1.4)
+	# Carved slate whose cracks and veins glow, rather than a flat glowing prism.
+	obelisk.material_override = MaterialKit.surface(&"crypt_stone", Color(0.55, 0.7, 0.9), {
+		&"tint_strength": 0.35, &"brightness": 1.5, &"waterline": 0.0, &"grime_height": 0.0, &"moss": 0.0,
+		&"world_space": false, &"tiles_per_metre": 0.8, &"emission_color": Color(0.35, 0.65, 1.0),
+		&"emission_energy": 3.0, &"glow_in_cracks": 1.0})
 	ws.add_child(obelisk)
 	if not headless:
 		var glow := OmniLight3D.new()
@@ -201,7 +207,7 @@ static func _lights(root: Node3D) -> void:
 		bm.height = 1.1
 		bowl.mesh = bm
 		bowl.position = p + Vector3(0, 0.55, 0)
-		bowl.material_override = pbr_material("Metal056C")
+		bowl.material_override = MaterialKit.surface(&"iron_rusted")
 		root.add_child(bowl)
 		var fire := MeshInstance3D.new()
 		var fm := SphereMesh.new()

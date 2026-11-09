@@ -27,22 +27,11 @@ func setup(size: Vector2, origin: Vector2) -> void:
 	plane.subdivide_depth = 8
 	ground.mesh = plane
 	ground.position = Vector3(origin.x + size.x * 0.5, 0.0, origin.y + size.y * 0.5)
-	var mat := ShaderMaterial.new()
-	mat.shader = GROUND_SHADER
+	# The crypt-floor photoscan and its weathering settings live in materials/crypt_ground.tres.
+	var mat := MaterialKit.GROUND.duplicate() as ShaderMaterial
 	mat.set_shader_parameter("surface_tex", texture)
 	mat.set_shader_parameter("grid_origin", origin)
 	mat.set_shader_parameter("grid_size", size)
-	var tiles_base := "res://assets/textures/ambientcg/Tiles093/Tiles093_1K-JPG_"
-	if ResourceLoader.exists(tiles_base + "Color.jpg"):
-		mat.set_shader_parameter("albedo_tex", load(tiles_base + "Color.jpg"))
-	if ResourceLoader.exists(tiles_base + "NormalGL.jpg"):
-		mat.set_shader_parameter("normal_tex", load(tiles_base + "NormalGL.jpg"))
-	if ResourceLoader.exists(tiles_base + "Roughness.jpg"):
-		mat.set_shader_parameter("roughness_tex", load(tiles_base + "Roughness.jpg"))
-	if ResourceLoader.exists(tiles_base + "AmbientOcclusion.jpg"):
-		mat.set_shader_parameter("ao_tex", load(tiles_base + "AmbientOcclusion.jpg"))
-	if ResourceLoader.exists(tiles_base + "Displacement.jpg"):
-		mat.set_shader_parameter("height_tex", load(tiles_base + "Displacement.jpg"))
 	ground.material_override = mat
 	add_child(ground)
 

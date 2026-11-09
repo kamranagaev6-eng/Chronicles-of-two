@@ -5,7 +5,7 @@ shader_type spatial;
 // The grid writes one texel per 0.5 m cell: R = material code, G = flags, B = cloud.
 render_mode diffuse_burley, specular_schlick_ggx;
 
-uniform sampler2D surface_tex : filter_nearest, repeat_disable;
+uniform sampler2D surface_tex : hint_default_black, filter_nearest, repeat_disable;
 uniform vec2 grid_origin = vec2(-18.0, -14.0);
 uniform vec2 grid_size = vec2(36.0, 28.0);
 
@@ -38,10 +38,21 @@ varying vec3 world_pos;
 const vec3 UP = vec3(0.0, 1.0, 0.0);
 
 
+// Sine-free hashes (stable on every GPU at world-space magnitudes).
 float hash(vec2 p) {
-	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+	vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.x + p3.y) * p3.z);
 }
 
+vec2 hash2(vec2 p) {
+	vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+	p3 += dot(p3, p3.yzx + 33.33);
+	return fract((p3.xx + p3.yz) * p3.zy);
+}
+
+// Value noise: only for soft masks (moss clumps, dust, puddles), never for normals or lines,
+// because its slope is flat along the lattice and would draw a grid.
 float vnoise(vec2 p) {
 	vec2 i = floor(p);
 	vec2 f = fract(p);
@@ -49,30 +60,83 @@ float vnoise(vec2 p) {
 	return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
 }
 
+const mat2 ROT = mat2(vec2(0.8, 0.6), vec2(-0.6, 0.8));
+
 float fbm(vec2 p) {
 	float total = 0.0;
 	float amp = 0.5;
 	for (int i = 0; i < 4; i++) {
 		total += amp * vnoise(p);
-		p = p * 2.07 + vec2(5.3, 1.9);
+		p = ROT * p * 2.07 + vec2(5.3, 1.9);
 		amp *= 0.5;
 	}
 	return total;
 }
 
-// Wind-blown ripples as a height field; the normal comes from finite differences.
-float ripple_height(vec2 p, float t, float speed) {
-	return vnoise(p * 1.7 + vec2(t * 0.31, t * 0.22) * speed)
-		+ 0.5 * vnoise(p * 3.9 - vec2(t * 0.52, -t * 0.13) * speed)
-		+ 0.25 * vnoise(p * 8.3 + vec2(-t * 0.27, t * 0.61) * speed);
+// Gradient noise in about [-1, 1] with a quintic fade: no flat spots on the lattice, so its slope
+// can drive normals and its zero crossings can draw lines.
+float gnoise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+	float a = dot(hash2(i) * 2.0 - 1.0, f);
+	float b = dot(hash2(i + vec2(1.0, 0.0)) * 2.0 - 1.0, f - vec2(1.0, 0.0));
+	float c = dot(hash2(i + vec2(0.0, 1.0)) * 2.0 - 1.0, f - vec2(0.0, 1.0));
+	float d = dot(hash2(i + vec2(1.0, 1.0)) * 2.0 - 1.0, f - vec2(1.0, 1.0));
+	return mix(mix(a, b, u.x), mix(c, d, u.x), u.y) * 1.6;
 }
 
+// Distance to the nearest Voronoi cell border: crack networks in ice.
+float voronoi_edge(vec2 p) {
+	vec2 n = floor(p);
+	vec2 f = fract(p);
+	vec2 mg = vec2(0.0);
+	vec2 mr = vec2(0.0);
+	float md = 8.0;
+	for (int j = -1; j <= 1; j++) {
+		for (int i = -1; i <= 1; i++) {
+			vec2 g = vec2(float(i), float(j));
+			vec2 r = g + hash2(n + g) - f;
+			float d = dot(r, r);
+			if (d < md) {
+				md = d;
+				mr = r;
+				mg = g;
+			}
+		}
+	}
+	md = 8.0;
+	for (int j = -2; j <= 2; j++) {
+		for (int i = -2; i <= 2; i++) {
+			vec2 g = mg + vec2(float(i), float(j));
+			vec2 r = g + hash2(n + g) - f;
+			if (dot(mr - r, mr - r) > 0.00001) {
+				md = min(md, dot(0.5 * (mr + r), normalize(r - mr)));
+			}
+		}
+	}
+	return md;
+}
+
+// Water surface normal: four directional swells (analytic slope) plus drifting gradient-noise chop.
 vec3 ripple_normal(vec2 p, float t, float speed, float amp) {
-	float e = 0.04;
-	float h0 = ripple_height(p, t, speed);
-	float hx = ripple_height(p + vec2(e, 0.0), t, speed);
-	float hz = ripple_height(p + vec2(0.0, e), t, speed);
-	return normalize(vec3(-(hx - h0) * amp / e, 1.0, -(hz - h0) * amp / e));
+	vec2 slope = vec2(0.0);
+	vec2 dirs[4] = vec2[](vec2(0.96, 0.28), vec2(-0.6, 0.8), vec2(0.2, -0.98), vec2(-0.87, -0.5));
+	float freqs[4] = float[](2.1, 3.3, 5.2, 7.9);
+	float rates[4] = float[](1.3, 1.7, 2.3, 2.9);
+	float amps[4] = float[](0.5, 0.3, 0.18, 0.1);
+	for (int i = 0; i < 4; i++) {
+		float phase = dot(dirs[i], p) * freqs[i] + t * rates[i] * speed;
+		slope += dirs[i] * freqs[i] * amps[i] * cos(phase);
+	}
+	float e = 0.05;
+	vec2 q = p * 2.3 + vec2(t * 0.21, t * 0.17) * speed;
+	float h0 = gnoise(q);
+	slope += vec2(gnoise(q + vec2(e, 0.0)) - h0, gnoise(q + vec2(0.0, e)) - h0) / e * 0.9;
+	vec2 q2 = ROT * p * 5.7 - vec2(t * 0.33, -t * 0.12) * speed;
+	float h1 = gnoise(q2);
+	slope += vec2(gnoise(q2 + vec2(e, 0.0)) - h1, gnoise(q2 + vec2(0.0, e)) - h1) / e * 0.35;
+	return normalize(vec3(-slope.x * amp, 1.0, -slope.y * amp));
 }
 
 // Bilinear coverage of one material code over the four nearest cells.
@@ -177,28 +241,34 @@ void fragment() {
 		float sub = smoothstep(0.0, 0.04, d);
 		float halo = (1.0 - smoothstep(lv, lv + 0.3, h)) * smoothstep(0.0, 0.3, c_water);
 		col *= mix(1.0, 0.48, max(halo, sub));
-		col = mix(col, vec3(0.025, 0.062, 0.075) + col * 0.22, smoothstep(0.0, 0.4, d) * 0.85);
-		float caustic = smoothstep(0.62, 0.9, vnoise(w * 4.0 + vec2(t * 0.4, -t * 0.3)) * vnoise(w * 6.5 - vec2(t * 0.25, t * 0.5)) * 2.2);
-		col += vec3(0.03, 0.06, 0.06) * caustic * smoothstep(0.02, 0.2, d);
-		rough = mix(rough, mix(0.3, 0.025, sub), max(halo, sub));
-		n = normalize(mix(n, ripple_normal(w, t, 1.0, 0.05), sub));
+		col = mix(col, vec3(0.012, 0.03, 0.036) + col * 0.2, smoothstep(0.0, 0.4, d) * 0.85);
+		// Caustic web: where the ridges of two drifting gradient-noise fields cross.
+		float r1 = 1.0 - abs(gnoise(w * 2.6 + vec2(t * 0.35, -t * 0.27)));
+		float r2 = 1.0 - abs(gnoise(ROT * w * 3.4 - vec2(t * 0.22, t * 0.41)));
+		float caustic = pow(r1, 9.0) + pow(r2, 9.0);
+		col += vec3(0.02, 0.045, 0.045) * caustic * smoothstep(0.02, 0.25, d);
+		rough = mix(rough, mix(0.3, 0.03, sub), max(halo, sub));
+		n = normalize(mix(n, ripple_normal(w, t, 1.0, 0.035), sub));
 	}
 
 	float c_ice = cover(codes, 2, f);
 	if (c_ice > 0.001) {
 		float frost_edge = smoothstep(0.2, 0.7, c_ice + edge_noise * 1.5);
-		float crack = 1.0 - smoothstep(0.0, 0.022, abs(vnoise(w * 2.2) - 0.5));
-		crack = max(crack, (1.0 - smoothstep(0.0, 0.016, abs(vnoise(w * 5.3 + 9.0) - 0.5))) * 0.55);
-		float frosty = clamp(smoothstep(0.4, 0.8, fbm(w * 1.2 + 5.0)) * 0.7 + (1.0 - frost_edge) * 0.6 + mortar * 0.3, 0.0, 1.0);
-		vec3 under_ice = col * vec3(0.5, 0.72, 0.9) + vec3(0.07, 0.14, 0.19);
-		vec3 ice_col = mix(under_ice, vec3(0.82, 0.92, 0.98), frosty);
-		ice_col = mix(ice_col, vec3(0.95, 0.99, 1.0), crack);
-		vec2 grain = floor(w * 55.0);
-		float glint = step(0.993, hash(grain)) * (0.5 + 0.5 * sin(t * 2.5 + hash(grain + 3.0) * 30.0));
+		// Crack network: Voronoi borders, bent by a gentle warp, at two scales.
+		vec2 warp = vec2(gnoise(w * 0.9), gnoise(w * 0.9 + 4.7)) * 0.3;
+		float crack = 1.0 - smoothstep(0.0, 0.03, voronoi_edge(w * 1.1 + warp));
+		crack = max(crack, (1.0 - smoothstep(0.0, 0.022, voronoi_edge(w * 3.6 + warp * 2.0 + 7.0))) * 0.45);
+		float frosty = clamp(smoothstep(0.42, 0.75, fbm(w * 1.2 + 5.0)) * 0.55 + (1.0 - frost_edge) * 0.6 + mortar * 0.25, 0.0, 1.0);
+		vec3 under_ice = col * vec3(0.6, 0.8, 0.95) + vec3(0.025, 0.06, 0.085);
+		vec3 frost_col = vec3(0.46, 0.56, 0.62) * (0.85 + 0.3 * vnoise(w * 23.0));
+		vec3 ice_col = mix(under_ice, frost_col, frosty);
+		ice_col = mix(ice_col, vec3(0.66, 0.76, 0.82), crack * 0.8);
+		vec2 grain = floor(w * 90.0);
+		float glint = step(0.9975, hash(grain)) * (0.5 + 0.5 * sin(t * 2.5 + hash(grain + 3.0) * 30.0));
 		col = mix(col, ice_col, frost_edge);
-		rough = mix(rough, mix(0.04, 0.5, frosty), frost_edge);
-		n = normalize(mix(n, UP, frost_edge * 0.75));
-		emit += (vec3(0.03, 0.08, 0.12) + glint * vec3(1.4, 1.6, 1.8)) * frost_edge;
+		rough = mix(rough, mix(0.05, 0.55, max(frosty, crack * 0.6)), frost_edge);
+		n = normalize(mix(n, UP, frost_edge * 0.7));
+		emit += (vec3(0.008, 0.02, 0.032) + glint * vec3(0.6, 0.7, 0.8)) * frost_edge;
 	}
 
 	float c_oil = cover(codes, 3, f);
@@ -211,10 +281,10 @@ void fragment() {
 		vec3 to_cam = normalize(CAMERA_POSITION_WORLD - world_pos);
 		float thickness = fbm(w * 0.9 + vec2(t * 0.03, 0.0)) * 2.2 + to_cam.y * 0.8;
 		vec3 film = 0.5 + 0.5 * cos(6.2831 * (thickness + vec3(0.0, 0.33, 0.67)));
-		float film_mask = smoothstep(0.45, 0.85, fbm(w * 0.7 + vec2(3.0, t * 0.02)));
-		col = mix(col, vec3(0.022, 0.018, 0.013) + film * 0.07 * film_mask, sub);
+		float film_mask = smoothstep(0.4, 0.8, fbm(w * 0.7 + vec2(3.0, t * 0.02)));
+		col = mix(col, vec3(0.03, 0.025, 0.018) + film * 0.11 * film_mask, sub);
 		rough = mix(rough, 0.05, max(sub, halo * 0.6));
-		n = normalize(mix(n, ripple_normal(w, t, 0.15, 0.015), sub));
+		n = normalize(mix(n, ripple_normal(w, t, 0.12, 0.012), sub));
 	}
 
 	float c_fire = cover(codes, 4, f);
@@ -222,7 +292,7 @@ void fragment() {
 		float burn = smoothstep(0.1, 0.6, c_fire + edge_noise);
 		col = mix(col, col * 0.12 + vec3(0.02, 0.014, 0.01), burn);
 		rough = mix(rough, 1.0, burn);
-		float flick = vnoise(w * 2.5 + vec2(0.0, t * 2.5)) * 0.6 + 0.4 * vnoise(w * 7.0 - vec2(t * 4.0));
+		float flick = clamp(0.5 + 0.35 * gnoise(w * 2.5 + vec2(0.0, t * 2.5)) + 0.25 * gnoise(ROT * w * 7.0 - vec2(t * 4.0)), 0.0, 1.0);
 		float cracks = 1.0 - smoothstep(0.1, mortar_level + 0.1, h);
 		float hot = clamp(cracks * 1.3 + flick * 0.7 - 0.25, 0.0, 1.6) * burn;
 		emit += mix(vec3(1.9, 0.32, 0.04), vec3(2.8, 1.25, 0.32), flick) * hot * 1.3;
@@ -231,18 +301,19 @@ void fragment() {
 	float c_holy = cover(codes, 5, f);
 	if (c_holy > 0.001) {
 		float glow = smoothstep(0.2, 0.7, c_holy + edge_noise);
-		float pulse = 0.65 + 0.35 * sin(t * 2.0 + vnoise(w * 2.0) * 6.0);
-		col = mix(col, col * vec3(1.6, 1.4, 0.95) + vec3(0.14, 0.11, 0.04), glow * 0.6);
-		emit += (vec3(1.3, 0.9, 0.32) * mortar * 0.9 + vec3(0.3, 0.22, 0.07) * 0.35) * pulse * glow;
+		float pulse = 0.65 + 0.35 * sin(t * 2.0 + gnoise(w * 1.5) * 4.0);
+		col = mix(col, col * vec3(1.35, 1.2, 0.9) + vec3(0.05, 0.04, 0.015), glow * 0.5);
+		emit += (vec3(1.2, 0.82, 0.3) * mortar * 0.6 + vec3(0.25, 0.18, 0.06) * 0.2) * pulse * glow;
 	}
 
 	float c_shock = flag_cover(flags, 1, f);
 	if (c_shock > 0.001) {
-		// Arcs crawl along the mortar and through any water.
-		float arc = smoothstep(0.8, 0.95, vnoise(w * 5.0 + vec2(t * 9.0, -t * 7.0)));
+		// Thin arcs (gradient-noise ridges) crawl along the mortar and through any water.
+		float arc = pow(1.0 - abs(gnoise(w * 3.0 + vec2(t * 9.0, -t * 7.0))), 14.0);
+		arc += pow(1.0 - abs(gnoise(ROT * w * 5.5 - vec2(t * 6.0, t * 11.0))), 18.0) * 0.6;
 		float path = max(mortar, c_water);
-		float strobe = step(0.3, fract(sin(floor(t * 20.0) * 12.9898) * 43758.5453));
-		emit += vec3(0.5, 0.65, 1.8) * c_shock * (0.22 + path * (0.5 + arc * 3.2) * strobe);
+		float strobe = step(0.3, hash(vec2(floor(t * 20.0), 7.0)));
+		emit += vec3(0.5, 0.65, 1.8) * c_shock * (0.04 + path * (0.06 + arc * 2.4) * strobe);
 	}
 	float c_bless = flag_cover(flags, 2, f);
 	if (c_bless > 0.001) {

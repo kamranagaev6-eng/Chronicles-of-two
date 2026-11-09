@@ -17,7 +17,7 @@ $Ledger = Join-Path $RepoRoot "docs/license_ledger.csv"
 # Set id -> maps kept. Every set keeps Color, NormalGL and Roughness; the rest only where a shader reads them.
 $Sets = [ordered]@{
     "Tiles093"   = @("Color", "NormalGL", "Roughness", "AmbientOcclusion", "Displacement")  # crypt floor
-    "Bricks108B" = @("Color", "NormalGL", "Roughness", "AmbientOcclusion")                  # crypt walls
+    "Bricks113A" = @("Color", "NormalGL", "Roughness", "AmbientOcclusion")                  # crypt walls (ashlar)
     "Rock058"    = @("Color", "NormalGL", "Roughness", "AmbientOcclusion")                  # pillars, ruins, plinth
     "Planks037A" = @("Color", "NormalGL", "Roughness", "AmbientOcclusion")                  # barrels, dummy post
     "Wood035"    = @("Color", "NormalGL", "Roughness")                                      # staff, bow, quiver
