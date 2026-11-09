@@ -33,6 +33,11 @@ uniform vec3 murk_color : source_color = vec3(0.02, 0.05, 0.055);
 // Metres of soot, mud and damp creeping in from the walls.
 uniform float wall_grime = 3.0;
 
+group_uniforms surfaces;
+// Brightest any surface may glow (luminance of the summed emission). Enemy telegraphs are unshaded
+// red-orange at about 0.45-0.7, so surface effects stay below them and the stone shows through.
+uniform float emission_cap : hint_range(0.0, 4.0) = 0.6;
+
 varying vec3 world_pos;
 
 const vec3 UP = vec3(0.0, 1.0, 0.0);
@@ -258,17 +263,17 @@ void fragment() {
 		vec2 warp = vec2(gnoise(w * 0.9), gnoise(w * 0.9 + 4.7)) * 0.3;
 		float crack = 1.0 - smoothstep(0.0, 0.03, voronoi_edge(w * 1.1 + warp));
 		crack = max(crack, (1.0 - smoothstep(0.0, 0.022, voronoi_edge(w * 3.6 + warp * 2.0 + 7.0))) * 0.45);
-		float frosty = clamp(smoothstep(0.42, 0.75, fbm(w * 1.2 + 5.0)) * 0.55 + (1.0 - frost_edge) * 0.6 + mortar * 0.25, 0.0, 1.0);
+		float frosty = clamp(smoothstep(0.42, 0.75, fbm(w * 1.2 + 5.0)) * 0.45 + (1.0 - frost_edge) * 0.6 + mortar * 0.25, 0.0, 1.0);
 		vec3 under_ice = col * vec3(0.6, 0.8, 0.95) + vec3(0.025, 0.06, 0.085);
-		vec3 frost_col = vec3(0.46, 0.56, 0.62) * (0.85 + 0.3 * vnoise(w * 23.0));
+		vec3 frost_col = vec3(0.34, 0.42, 0.48) * (0.85 + 0.3 * vnoise(w * 23.0));
 		vec3 ice_col = mix(under_ice, frost_col, frosty);
-		ice_col = mix(ice_col, vec3(0.66, 0.76, 0.82), crack * 0.8);
+		ice_col = mix(ice_col, vec3(0.5, 0.58, 0.64), crack * 0.7);
 		vec2 grain = floor(w * 90.0);
 		float glint = step(0.9975, hash(grain)) * (0.5 + 0.5 * sin(t * 2.5 + hash(grain + 3.0) * 30.0));
 		col = mix(col, ice_col, frost_edge);
 		rough = mix(rough, mix(0.05, 0.55, max(frosty, crack * 0.6)), frost_edge);
 		n = normalize(mix(n, UP, frost_edge * 0.7));
-		emit += (vec3(0.008, 0.02, 0.032) + glint * vec3(0.6, 0.7, 0.8)) * frost_edge;
+		emit += (vec3(0.006, 0.015, 0.024) + glint * vec3(0.3, 0.35, 0.4)) * frost_edge;
 	}
 
 	float c_oil = cover(codes, 3, f);
@@ -294,8 +299,9 @@ void fragment() {
 		rough = mix(rough, 1.0, burn);
 		float flick = clamp(0.5 + 0.35 * gnoise(w * 2.5 + vec2(0.0, t * 2.5)) + 0.25 * gnoise(ROT * w * 7.0 - vec2(t * 4.0)), 0.0, 1.0);
 		float cracks = 1.0 - smoothstep(0.1, mortar_level + 0.1, h);
-		float hot = clamp(cracks * 1.3 + flick * 0.7 - 0.25, 0.0, 1.6) * burn;
-		emit += mix(vec3(1.9, 0.32, 0.04), vec3(2.8, 1.25, 0.32), flick) * hot * 1.3;
+		// Embers glow in the cracks; the charred stone between them stays visible.
+		float hot = clamp(cracks * 1.1 + flick * 0.5 - 0.3, 0.0, 1.0) * burn;
+		emit += mix(vec3(1.9, 0.32, 0.04), vec3(2.8, 1.25, 0.32), flick) * (hot * 0.8 + 0.04 * burn);
 	}
 
 	float c_holy = cover(codes, 5, f);
@@ -311,9 +317,11 @@ void fragment() {
 		// Thin arcs (gradient-noise ridges) crawl along the mortar and through any water.
 		float arc = pow(1.0 - abs(gnoise(w * 3.0 + vec2(t * 9.0, -t * 7.0))), 14.0);
 		arc += pow(1.0 - abs(gnoise(ROT * w * 5.5 - vec2(t * 6.0, t * 11.0))), 18.0) * 0.6;
-		float path = max(mortar, c_water);
+		// Only drifting patches crackle at any moment, so the pool reads as live current, not a lamp.
+		float crawl = smoothstep(0.15, 0.55, gnoise(w * 0.6 + vec2(t * 1.3, -t * 0.9)));
+		float path = max(mortar, c_water * 0.5);
 		float strobe = step(0.3, hash(vec2(floor(t * 20.0), 7.0)));
-		emit += vec3(0.5, 0.65, 1.8) * c_shock * (0.04 + path * (0.06 + arc * 2.4) * strobe);
+		emit += vec3(0.5, 0.65, 1.8) * c_shock * (0.02 + path * (0.03 + arc * crawl * 1.6) * strobe);
 	}
 	float c_bless = flag_cover(flags, 2, f);
 	if (c_bless > 0.001) {
@@ -325,6 +333,8 @@ void fragment() {
 		col = mix(col, col * vec3(0.55, 0.42, 0.65), c_curse * 0.7);
 		emit += vec3(0.28, 0.06, 0.4) * c_curse * smoothstep(0.45, 0.75, swirl) * (0.4 + mortar);
 	}
+
+	emit *= min(1.0, emission_cap / max(dot(emit, vec3(0.2126, 0.7152, 0.0722)), 1e-4));
 
 	ALBEDO = col;
 	ROUGHNESS = clamp(rough, 0.02, 1.0);

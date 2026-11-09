@@ -1,8 +1,8 @@
 extends Node3D
 ## Texture review scene: the Drowned Hall built exactly as in play (ArenaBuilder + SurfaceLayer), with
 ## every elemental surface painted, both heroes and each enemy kind posed, under fixed cameras that do
-## not depend on the gameplay camera. Keys 1-5 switch camera, Esc returns to the menu.
-## Command line (after --): --showcase-camera=1..5, plus the usual --screenshot / --quit-after.
+## not depend on the gameplay camera. Keys 1-7 switch camera, Esc returns to the menu.
+## Command line (after --): --showcase-camera=1..7, plus the usual --screenshot / --quit-after.
 
 const CAMERAS: Array = [
 	# [position, look-at target]
@@ -11,6 +11,8 @@ const CAMERAS: Array = [
 	[Vector3(5.0, 3.2, 12.0), Vector3(6.0, 0.4, 6.0)],     # 3: water, ice and lightning by the east pillar
 	[Vector3(1.5, 3.6, -5.5), Vector3(1.5, 0.3, -11.0)],   # 4: oil, fire and holy ground by the north wall
 	[Vector3(-9.5, 1.7, 3.0), Vector3(-15.5, 1.4, 1.5)],   # 5: masonry, ruin and pillar close up
+	[Vector3(-0.6, 2.3, 13.0), Vector3(0.0, 3.0, -10.0)], # 6: shoulder-height architectural view
+	[Vector3(-13.3, 1.9, 10.5), Vector3(-17.0, 2.8, -3.0)], # 7: fire, wall relief and wet stone
 ]
 
 var surface: SurfaceLayer

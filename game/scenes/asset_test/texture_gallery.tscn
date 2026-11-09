@@ -13,6 +13,7 @@
 [ext_resource type="Material" path="res://game/presentation/materials/burlap.tres" id="m_burlap"]
 [ext_resource type="Material" path="res://game/presentation/materials/leather.tres" id="m_leather"]
 [ext_resource type="Material" path="res://game/presentation/materials/drowned_flesh.tres" id="m_drowned_flesh"]
+[ext_resource type="Material" path="res://game/presentation/materials/crypt_mortar.tres" id="m_crypt_mortar"]
 [ext_resource type="Material" path="res://game/presentation/materials/crypt_ground.tres" id="m_crypt_ground"]
 
 [sub_resource type="Environment" id="env"]
@@ -245,5 +246,17 @@ surface_material_override/0 = ExtResource("m_drowned_flesh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9, 0.02, 1.95)
 billboard = 1
 text = "drowned_flesh"
+font_size = 22
+outline_size = 6
+
+[node name="Sphere_crypt_mortar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 0.45, 1.4)
+mesh = SubResource("sphere")
+surface_material_override/0 = ExtResource("m_crypt_mortar")
+
+[node name="Label_crypt_mortar" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.35, 0.02, 1.95)
+billboard = 1
+text = "crypt_mortar"
 font_size = 22
 outline_size = 6

@@ -54,6 +54,7 @@ varying vec3 v_obj_pos;
 varying vec3 v_obj_normal;
 varying vec3 v_world_pos;
 varying vec3 v_world_normal;
+varying mat3 v_normal_basis;
 
 // Projection planes. X and Z keep images upright on walls (v runs down the world Y axis).
 const vec3 AX = vec3(1.0, 0.0, 0.0);
@@ -110,7 +111,8 @@ void vertex() {
 	v_obj_pos = VERTEX;
 	v_obj_normal = NORMAL;
 	v_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	v_world_normal = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
+	v_normal_basis = MODEL_NORMAL_MATRIX;
+	v_world_normal = normalize(v_normal_basis * NORMAL);
 }
 
 void fragment() {
@@ -142,7 +144,7 @@ void fragment() {
 	// the projection position so it sticks to moving parts; heights (grime, waterline) use world Y.
 	vec3 wp = v_world_pos;
 	vec3 np = p;
-	vec3 wn = world_space ? n : normalize((MODEL_MATRIX * vec4(n, 0.0)).xyz);
+	vec3 wn = world_space ? n : normalize(v_normal_basis * n);
 	float macro = fbm(np * macro_scale);
 	col *= 1.0 + (macro - 0.5) * 2.0 * macro_strength;
 	float warm = smoothstep(0.4, 0.75, fbm(np * macro_scale * 0.6 + vec3(11.0)));
@@ -201,7 +203,7 @@ void fragment() {
 	METALLIC = metal;
 	AO = mix(1.0, ao, ao_strength);
 	AO_LIGHT_AFFECT = 0.15;
-	vec3 world_nn = world_space ? nn : normalize((MODEL_MATRIX * vec4(nn, 0.0)).xyz);
+	vec3 world_nn = world_space ? nn : normalize(v_normal_basis * nn);
 	NORMAL = normalize((VIEW_MATRIX * vec4(world_nn, 0.0)).xyz);
 	EMISSION = emission_color * emission_energy * mix(1.0, clamp((1.0 - ao) * 4.0, 0.0, 1.0), glow_in_cracks);
 }

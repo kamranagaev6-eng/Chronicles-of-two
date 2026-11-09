@@ -68,6 +68,13 @@ func test_tinted_variant_is_a_cached_copy_and_leaves_the_base_alone() -> void:
 	assert_same(MaterialKit.surface(&"cloth", Color(0.95, 0.72, 0.25), {&"damp": 0.4}), gold, "same request, same cached material")
 
 
+func test_mortar_kind_lines_up_with_world_space_masonry() -> void:
+	assert_true(MaterialKit.KINDS.has(&"crypt_mortar"), "separately modelled blocks need a mortar backing")
+	var mortar := MaterialKit.surface(&"crypt_mortar")
+	assert_true(bool(mortar.get_shader_parameter(&"world_space")), "mortar projects in world space like the blocks")
+	assert_gt(float(mortar.get_shader_parameter(&"roughness_bias")), 0.0, "mortar is rougher than the stone")
+
+
 func test_trim_glows_in_the_accent_colour() -> void:
 	var violet := Color(0.62, 0.42, 1.0)
 	var trim := MaterialKit.trim(violet)
