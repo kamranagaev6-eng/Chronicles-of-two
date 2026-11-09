@@ -1,0 +1,136 @@
+key,value,unit,description
+# Simulation and network rates
+sim_tickrate,60,hz,Fixed simulation rate (netfox tickrate and physics ticks)
+enemy_snapshot_hz,20,hz,Packed crowd snapshot rate
+surface_update_hz,10,hz,Surface grid update and patch rate
+interpolation_buffer_s,0.1,s,Guest interpolation buffer for host-simulated entities
+lag_comp_max_s,0.2,s,Maximum rewind for melee and hitscan lag compensation
+hero_hit_wait_s,0.2,s,How long an enemy hit waits for the target hero's timeline before resolving
+stats_send_hz,20,hz,Maximum rate of reliable hero stat updates
+guest_drop_pause_s,120,s,Encounter pause while waiting for a dropped guest to reconnect
+# Resonance
+primer_duration_s,4,s,How long a primer tag lasts
+primer_lockout_s,4,s,After a detonation the same primer type cannot be reapplied to that target
+resonance_multiplier,2,x,Reaction multiplier when consuming the partner's primer
+basic_reaction_multiplier,1.25,x,Reaction multiplier when consuming your own primer
+basic_effect_strength,0.5,x,Effect strength of a Basic reaction
+bond_gain_resonance,0.12,meter,Bond meter gained per Resonance
+bond_gain_revive,0.15,meter,Bond meter gained per completed revive
+bond_gain_protect,0.04,meter,Bond meter gained when a barrier or redirection protects the partner
+# Damage
+armour_hit_factor,10,x,Armour reduction = armour / (armour + factor * hit)
+armour_cap,0.9,fraction,Maximum physical mitigation from armour
+resist_cap,0.75,fraction,Maximum elemental resistance
+vulnerability_cap,1.0,fraction,Maximum summed vulnerability V
+coop_more_cap,1.5,x,Combined cap of co-op more factors on one hit
+base_crit_chance,0.05,fraction,Base critical strike chance
+base_crit_multiplier,1.5,x,Base critical strike multiplier
+exposed_vulnerability,0.2,fraction,Exposed: extra elemental damage taken
+staggered_vulnerability,0.5,fraction,Staggered: extra damage taken
+superconduct_vulnerability,0.3,fraction,Superconduct: extra elemental damage taken
+oathbond_range_m,8,m,Oathbond redirection range
+oathbond_share,0.1,fraction,Base share of partner damage moved to the Vanguard
+oathbond_share_cap,0.2,fraction,Maximum Oathbond share with CHA
+# Stagger and control
+stun_s,1.5,s,Full stagger meter on an ordinary enemy stuns it
+staggered_s,6,s,Full stagger meter on an elite or boss Staggers it
+stagger_recovery_s,8,s,Recovery after a Stagger before the meter fills again
+primed_stagger_multiplier,2,x,Primed enemies take stagger faster
+freeze_s,1.6,s,Freeze duration on ordinary enemies
+control_dr_window_s,10,s,Elite diminishing-returns window
+control_dr_step,0.5,x,Each repeat within the window multiplies control duration
+prone_s,1.0,s,Prone duration after slipping or being knocked down
+# Physics and impacts
+mass_light,1,mass,Light mass class
+mass_medium,3,mass,Medium mass class
+mass_heavy,8,mass,Heavy mass class
+knockback_cap_light,16,m/s,Velocity cap for light bodies
+knockback_cap_medium,12,m/s,Velocity cap for medium bodies
+knockback_cap_heavy,5,m/s,Velocity cap for heavy bodies
+knockback_decel,18,m/s2,Knockback deceleration on normal ground
+wall_slam_speed,6,m/s,Wall impact speed that causes a slam
+wall_slam_damage_factor,4,x,Slam damage = speed * mass * factor
+momentum_transfer,0.6,fraction,Momentum passed when a knocked enemy hits another
+str_impulse_per_mod,0.06,fraction,Knockback impulse increase per STR modifier
+shove_cooldown_s,3,s,Universal shove cooldown
+juggle_max,3,count,Maximum air juggles
+launch_hang_s,0.6,s,Base airborne time of a launch
+# Hero
+hero_accel,70,m/s2,Ground acceleration
+hero_decel,90,m/s2,Ground deceleration
+dodge_charges,2,count,Dodge charges
+dodge_recharge_s,1.6,s,Time to restore one dodge charge
+dodge_speed,13,m/s,Dodge speed
+dodge_ticks,12,ticks,Dodge duration
+dodge_iframe_ticks,10,ticks,Dodge invulnerability window
+dodge_assist_multiplier,1.5,x,Dodge timing assistance widens the invulnerability window
+input_buffer_s,0.15,s,Action input buffer
+cast_move_multiplier,0.35,x,Movement speed while winding up or recovering
+flask_charges,3,count,Healing flask charges (refill at Waystones)
+flask_heal_fraction,0.35,fraction,Flask heal as a fraction of max health
+downed_crawl_s,25,s,Downed timer before falling
+downed_per_con_s,2,s,Extra downed time per CON modifier point
+downed_crawl_multiplier,0.25,x,Crawl speed while downed
+revive_hold_s,2.5,s,Hold interact to revive
+revive_range_m,1.8,m,Revive reach
+revive_damage_taken_multiplier,0.5,x,Damage taken while reviving
+revived_health_fraction,0.4,fraction,Health after a revive
+revived_protection_s,2,s,Protection after a revive
+damage_assist_multiplier,0.75,x,Per-player assist: damage taken
+interact_range_m,2.2,m,General interaction reach
+resolve_per_hit,4,resolve,Resolve gained per landed hit
+resolve_empower_cost,50,resolve,Resolve spent to empower a finisher
+resolve_empower_more,1.25,x,More damage on an empowered finisher
+flux_weave_refund,0.15,fraction,Elemental Weave refund when switching elements
+# Bond Tether
+tether_full_m,14,m,Tether fully visible within this distance
+tether_fade_m,18,m,Tether drops beyond this distance
+# Combat Director
+tokens_melee,1,count,Melee-or-heavy attack tokens per hero
+tokens_ranged,2,count,Ranged attack tokens per hero
+tokens_melee_heroic,2,count,Melee tokens per hero on Heroic
+token_audit_s,1,s,Token leak audit interval
+token_claim_grace_s,0.5,s,A claimed token must reach a telegraph within this time
+slots_inner_count,6,count,Inner engagement slots
+slots_inner_radius,2,m,Inner engagement ring radius
+slots_outer_count,10,count,Outer engagement slots
+slots_outer_radius,5,m,Outer engagement ring radius
+flow_field_hz,4,hz,Flow field refresh rate
+separation_radius,1.1,m,Enemy separation steering radius
+# Surfaces
+surface_cell_m,0.5,m,Surface cell size
+surface_chunk_cells,16,cells,Chunk edge length in cells
+hazard_contact_delay_s,0.5,s,Contact time before hazard damage starts
+hazard_tick_s,0.5,s,Hazard damage tick interval
+fire_spread_s,0.3,s,Time for fire to spread into adjacent oil
+# Feel (presentation only)
+hitstop_min_ms,40,ms,Lightest hit-stop
+hitstop_max_ms,80,ms,Heaviest hit-stop
+camera_pitch_deg,50,deg,Gameplay camera pitch
+camera_distance_m,14,m,Gameplay camera distance
+camera_cursor_offset,0.22,fraction,Camera leads toward the cursor
+partner_effect_opacity,0.6,fraction,Partner effects render at this opacity
+regroup_distance_m,60,m,Regroup marker distance
+# Encounter
+arena_level,3,level,Hero level in the Milestone 1 arena
+wave_break_s,8,s,Pause between waves after the Waystone checkpoint
+# Sunken Crypt (M2)
+bell_slam_speed,2.5,m/s,Impact speed into the Belfry bell that rings it
+bell_slam_stagger_fraction,0.6,fraction,Stagger dealt to the Bellkeeper per bell slam (fraction of its meter)
+bell_toll_interval_s,13,s,Time between tolls while the Bellkeeper stands
+bell_toll_radius,7,m,Bell toll shockwave radius
+bell_toll_telegraph_s,1.8,s,Warning before the toll lands
+bell_toll_damage,22,damage,Toll damage to heroes inside the ring
+bell_toll_impulse,10,impulse,Toll knockback on heroes
+plates_hold_s,1.5,s,Both sluice plates held together this long opens the gate
+plate_radius_m,1.2,m,How close a hero must stand to hold a plate
+flood_s,18,s,Abbess flood phase
+ebb_s,14,s,Abbess ebb phase (anchors exposed)
+wheel_hold_s,3,s,Holding a sluice wheel this long drains the flood
+anchor_health,160,health,Health of each Abbess anchor
+anchor_count,3,count,Anchors chaining the Abbess
+leap_max_speed,22,m/s,Fastest Leap Slam travel speed
+wet_lightning_vulnerability,0.2,fraction,Extra lightning damage taken by wet enemies
+wet_freeze_multiplier,1.5,x,Freeze duration multiplier on wet enemies
+echo_max_targets,8,count,Most targets one echo can strike
+expedition_end_s,25,s,Time to pick rewards before returning home

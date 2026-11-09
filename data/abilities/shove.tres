@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"shove"
+display_name = "Shove"
+class_id = &"any"
+description = "Push enemies into walls and hazards. Stronger with STR; heavy enemies barely move."
+tag_label = "Universal"
+tags = Array[StringName]([&"melee", &"shove"])
+delivery = &"melee_arc"
+damage_type = &"physical"
+stagger = 4.0
+impulse = 24.0
+range_m = 2.2
+arc_deg = 100.0
+windup_ticks = 4
+active_ticks = 2
+recovery_ticks = 10
+cancel_tick = 8
+cooldown_ticks = 180
+move_multiplier = 0.4

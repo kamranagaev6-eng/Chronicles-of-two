@@ -1,0 +1,17 @@
+primer,finisher,reaction_id,name,pairing,radius,duration,magnitude,damage_scale,impulse,description
+frozen,impact,shatterfall,Shatterfall,Vanguard + Riftweaver,3.5,6,0.2,0.6,12,Shards blast outward with knockback; struck enemies Exposed
+dazed,arcane,thunderclap,Thunderclap,Vanguard + Riftweaver,4,0,4,0.6,0,"The target becomes a lightning rod, arcing to 4 enemies and electrifying water within 4 m"
+dazed,precision,coup_de_grace,Coup de Grace,Vanguard + Shadowstrider,0,0,0.2,0,0,The hit always crits; executes non-elites under 20% and elites under 8%
+marked,impact,sundering_judgment,Sundering Judgment,Vanguard + Shadowstrider,3,0,0.5,0,10,Ignores 50% of armour; nearby enemies knocked down
+rooted,impact,groundbreaker,Groundbreaker,Vanguard + Warden,3,1.2,0,0.5,0,Rooted enemies are torn up and launched for a 1.2 s juggle; landing deals area damage
+sanctified,primal,sacred_bloom,Sacred Bloom,Vanguard + Warden,5,6,0.1,0.3,0,Holy flowers burst; allies within 5 m gain a barrier of 10% max health
+marked,arcane,hex_bloom,Hex Bloom,Riftweaver + Shadowstrider,6,5,0.2,0,0,Enemies within 6 m take 20% more damage for 5 s
+shocked,precision,chain_execution,Chain Execution,Riftweaver + Shadowstrider,8,0,0.6,0.6,0,The strike jumps through every Shocked enemy within 8 m at 60% damage each
+rooted,arcane,thunderbloom,Thunderbloom,Riftweaver + Warden,6,4,0,0.4,0,Lightning runs along the roots between rooted enemies; the roots become electrified briars for 4 s
+frozen,primal,frostbriar,Frostbriar,Riftweaver + Warden,4,5,0.02,0.2,0,A frost-thorn field slows and damages enemies; heroes inside regenerate 2% health a second
+envenomed,primal,feeding_frenzy,Feeding Frenzy,Shadowstrider + Warden,0,0,1.5,0,0,"The spirit wolf devours the poison, dealing it at once x1.5; both heroes heal 30% of it, capped at 15% max health"
+rooted,precision,thornhunt,Thornhunt,Shadowstrider + Warden,6,3,0,0.3,0,The target and rooted enemies within 6 m bleed heavily for 3 s; crits refresh it
+dazed,impact,twin_verdict,Twin Verdict,Vanguard x2,4,0,3,0.8,10,Triple stagger; Sanctified ground nearby fuses into a holy nova
+frozen,arcane,superconduct,Superconduct,Riftweaver x2,5,6,0.3,0.3,0,Enemies within 5 m take 30% more elemental damage for 6 s
+marked,precision,crimson_waltz,Crimson Waltz,Shadowstrider x2,0,0,3,0,0,Every bleed and poison on the target detonates; a kill gives both heroes 3 Momentum
+rooted,primal,wild_hunt,Wild Hunt,Warden x2,8,0,0,0.6,12,A spirit stampede charges through rooted enemies in a line

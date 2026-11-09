@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"rift_anchor_throw"
+display_name = "Rift Anchor Throw"
+class_id = &"riftweaver"
+description = "Throw your rift anchor: it Freezes what it hits and freezes water where it lodges. Your light casts weaken until you recall it."
+tag_label = "Primer: Frozen"
+tags = Array[StringName]([&"throw", &"projectile", &"primer"])
+primer = &"frozen"
+delivery = &"throw"
+damage_type = &"cold"
+element = &"cold"
+base_damage = 16.0
+stagger = 10.0
+range_m = 22.0
+projectile_speed = 28.0
+projectile_radius = 0.4
+windup_ticks = 9
+active_ticks = 1
+recovery_ticks = 10
+cancel_tick = 12
+move_multiplier = 0.5
+surface_element = &"cold"
+surface_radius_m = 2.0
+status = &"frozen"
+status_duration_s = 1.6
+rune_tags = Array[StringName]([&"projectile"])

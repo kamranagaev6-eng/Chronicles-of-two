@@ -1,0 +1,5 @@
+finisher,twist_id,name,radius,magnitude,impulse,description
+impact,impact_twist,Impact,0,0.5,14,"Knockback, launch, extra stagger"
+arcane,arcane_twist,Arcane,2,1,0,Leaves a matching surface or spreads through an area
+precision,precision_twist,Precision,0,0.5,0,+50% crit chance on the hit; focused on one target
+primal,primal_twist,Primal,5,0.03,0,Spreads through nature: heals allies or snares nearby enemies

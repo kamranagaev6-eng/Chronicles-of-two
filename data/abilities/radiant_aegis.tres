@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"radiant_aegis"
+display_name = "Radiant Aegis"
+class_id = &"vanguard"
+unlock_level = 2
+description = "A barrier on both heroes inside its radius."
+tag_label = "Support"
+tags = Array[StringName]([&"area", &"support"])
+delivery = &"self_area"
+damage_type = &"holy"
+element = &"holy"
+radius_m = 6.0
+windup_ticks = 8
+active_ticks = 1
+recovery_ticks = 12
+cancel_tick = 12
+cooldown_ticks = 840
+move_multiplier = 0.4
+barrier_fraction = 0.2
+barrier_duration_s = 6.0
+rune_tags = Array[StringName]([&"area", &"support"])

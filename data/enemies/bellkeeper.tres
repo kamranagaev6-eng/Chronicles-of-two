@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/enemy_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"bellkeeper"
+display_name = "The Bellkeeper"
+rank = &"elite"
+undead = true
+mass_class = &"heavy"
+max_health = 780.0
+armour = 140.0
+resist_cold = 0.2
+stagger_max = 220.0
+move_speed = 2.5
+radius = 0.7
+height = 2.6
+token_kind = &"melee"
+attack_kind = &"slam"
+attack_range = 2.6
+preferred_range = 2.2
+telegraph_ticks = 54
+active_ticks = 4
+recovery_ticks = 66
+attack_damage = 36.0
+attack_damage_type = &"physical"
+attack_radius = 2.8
+attack_impulse = 16.0
+xp = 120
+body_color = Color(0.35, 0.32, 0.28, 1)
+accent_color = Color(0.95, 0.8, 0.25, 1)

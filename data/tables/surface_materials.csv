@@ -1,0 +1,7 @@
+material,code,speed_multiplier,friction,knockback_multiplier,hazard_dps,hazard_type,undead_dps,hero_regen_fraction,description
+none,0,1,1,1,0,,0,0,Bare ground
+water,1,0.9,1,1,0,,0,0,Wet; -10% speed
+ice,2,1,0.1,2,0,,0,0,Friction 0.1; knockback x2; slipping enemies fall prone
+oil,3,0.7,1,1,0,,0,0,30% slow
+burning,4,1,1,1,14,fire,0,0,Damage over time
+sanctified,5,1,1,1,0,,10,0.015,Heroes regenerate; undead burn

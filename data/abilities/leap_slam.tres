@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"leap_slam"
+display_name = "Leap Slam"
+class_id = &"vanguard"
+unlock_level = 6
+description = "Leap to a point; heavy area slam with large stagger."
+tag_label = "Finisher: Impact"
+tags = Array[StringName]([&"leap", &"area", &"finisher", &"mobility"])
+finisher = &"impact"
+delivery = &"leap"
+damage_type = &"physical"
+base_damage = 32.0
+stagger = 30.0
+impulse = 18.0
+range_m = 8.0
+radius_m = 2.6
+windup_ticks = 8
+active_ticks = 25
+recovery_ticks = 18
+cancel_tick = 45
+cooldown_ticks = 480
+resource_gain = 4.0
+move_multiplier = 0.0
+move_speed = 22.0
+move_ticks = 24
+rune_tags = Array[StringName]([&"area", &"melee"])

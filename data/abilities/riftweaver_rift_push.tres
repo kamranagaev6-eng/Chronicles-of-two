@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"riftweaver_rift_push"
+display_name = "Rift Push"
+class_id = &"riftweaver"
+description = "Heavy attack: a cone of rift force with big stagger. It shoves enemies into walls, hazards and bells."
+tag_label = "Heavy"
+tags = Array[StringName]([&"melee", &"heavy", &"shove"])
+delivery = &"melee_arc"
+damage_type = &"arcane"
+base_damage = 10.0
+stagger = 16.0
+impulse = 24.0
+range_m = 3.2
+arc_deg = 90.0
+windup_ticks = 12
+active_ticks = 3
+recovery_ticks = 18
+cancel_tick = 22
+cooldown_ticks = 30
+move_multiplier = 0.2
+rune_tags = Array[StringName]([&"melee", &"area"])

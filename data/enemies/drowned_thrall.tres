@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/enemy_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"drowned_thrall"
+display_name = "Drowned Thrall"
+rank = &"normal"
+undead = true
+mass_class = &"medium"
+max_health = 90.0
+armour = 20.0
+stagger_max = 40.0
+move_speed = 3.4
+radius = 0.42
+height = 1.75
+token_kind = &"melee"
+attack_kind = &"swipe"
+attack_range = 1.9
+preferred_range = 1.6
+telegraph_ticks = 36
+active_ticks = 4
+recovery_ticks = 48
+attack_damage = 14.0
+attack_damage_type = &"physical"
+attack_radius = 1.9
+attack_arc_deg = 100.0
+attack_impulse = 4.0
+xp = 10
+body_color = Color(0.32, 0.4, 0.38, 1)
+accent_color = Color(0.45, 0.95, 0.85, 1)

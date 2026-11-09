@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/enemy_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"crypt_archer"
+display_name = "Crypt Archer"
+rank = &"normal"
+undead = true
+mass_class = &"light"
+max_health = 55.0
+armour = 5.0
+stagger_max = 25.0
+move_speed = 3.6
+radius = 0.38
+height = 1.7
+token_kind = &"ranged"
+attack_kind = &"arrow"
+attack_range = 14.0
+preferred_range = 8.0
+telegraph_ticks = 48
+active_ticks = 1
+recovery_ticks = 60
+attack_damage = 12.0
+attack_damage_type = &"physical"
+attack_radius = 0.3
+projectile_speed = 18.0
+xp = 10
+body_color = Color(0.55, 0.52, 0.44, 1)
+accent_color = Color(0.95, 0.75, 0.35, 1)

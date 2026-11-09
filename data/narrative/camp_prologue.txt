@@ -1,0 +1,62 @@
+# Chronicle of Two — Prologue Camp Scene: The First Co-Written Page
+# Location: The Emberhearth, Emberrest
+# Participants: Ember (Dawn Vanguard) and Anastasia (Riftweaver)
+# Bond Rank: C -> C+ (Expression Reward: Camp Lantern decoration + "First Hearth" photo pose)
+
+[SCENE: the_first_blank_page]
+[STAGE: The campfire crackles with gentle blue-gold embers. The night sky above Emberrest is dark where stars have faded, but three embers still glow faintly above the chimney. The heavy leather-bound Chronicle rests on a low stone table between two wooden camp chairs.]
+
+[SPEAKER: Anastasia]
+Look at the blank leaf. In the old histories, pages were only inscribed when an entire age drew to a close. But tonight, both our names are written right at the top margin. Together.
+
+[SPEAKER: Ember]
+In gold and violet ink, no less. I think the book is tired of tragic solitary champions who try to carry the whole world on one shoulder until they break.
+
+[SPEAKER: Anastasia]
+[smiling] A very reasonable sentiment from a man who carries a three-foot iron pavise. Speaking of which, how are your arms after that wave of thralls?
+
+[SPEAKER: Ember]
+A little stiff around the shoulder joints, but nothing the hot tea and your frost compress couldn't settle. What about your Flux reserves? When you called down that Glacial Spire, the air turned to crystal for twenty yards.
+
+[SPEAKER: Anastasia]
+It felt natural. Like weaving a pattern we'd rehearsed a hundred times in our minds. When you charged forward with Shield Rush and pinned that drowned soldier, the space opened up before I even had to ask.
+
+[CHOICE: medium]
+[PROMPT: What should we restore first when we return from the Sunken Crypt?]
+[OPTION: forge] The Forge and Anvil — so we can temper our gear, socket runes, and test combos on training dummies.
+[OPTION: kitchen] The Kitchen and Stone Hearth — so we can bake fresh loaves and share a meal buff before each journey.
+[OPTION: garden] The Herb Garden — so our healing flasks stay full and we have sweet lavender by the tent door.
+
+[BRANCH: forge]
+[SPEAKER: Ember]
+A cold forge is the saddest thing in a sanctuary. If we get the bellows working, we can socket those new runes we recovered and balance our weapons properly.
+[SPEAKER: Anastasia]
+And I wouldn't mind an anvil sturdy enough to ground stray lightning charges. The forge it is.
+
+[BRANCH: kitchen]
+[SPEAKER: Anastasia]
+There is no rebuilding a home without the smell of warm sourdough and roasted apples. A hot meal together changes the feel of the whole evening.
+[SPEAKER: Ember]
+I couldn't agree more. Hardtack on the trail is tolerable only if there's real supper waiting at the end.
+
+[BRANCH: garden]
+[SPEAKER: Ember]
+Green shoots against black soot. An herb garden proves that life is taking the soil back from the Unwriting.
+[SPEAKER: Anastasia]
+And fresh chamomile before rest. It will make this stone terrace feel like our place again.
+
+[BRANCH_END]
+
+[SPEAKER: Anastasia]
+Tomorrow we descend into the Sunken Crypt. The Drowned Abbess won't give up her anchors easily, and the tide rises fast in those low tunnels.
+
+[SPEAKER: Ember]
+Then we stay on the high flagstones, freeze the channels when the flood rushes, and keep the tether tight. If either of us stumbles, the other holds the line. That's the rule of the hearth.
+
+[SPEAKER: Anastasia]
+[reaching out to touch the Chronicle page]
+That's the rule. Two halves of one fight, and a home waiting for us when we walk back through the archway.
+
+[BOND_REWARD: camp_decoration:hearth_lantern]
+[BOND_REWARD: photo_pose:hearthside_duet]
+[CHRONICLE_ENTRY: "The First Blank Page: Under the dying stars of Emberrest, two names were inscribed together upon the living book. Not as heroes doomed to sacrifice, but as two people choosing to rebuild a home side by side."]

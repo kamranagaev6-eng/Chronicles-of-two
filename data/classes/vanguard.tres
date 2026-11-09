@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ClassDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/class_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"vanguard"
+display_name = "Dawn Vanguard"
+epithet = "the Shield and the Blade"
+description = "An armoured frontliner with holy fire, barriers and displacement."
+resource_id = &"resolve"
+resource_label = "Resolve"
+resource_max = 100.0
+resource_start = 0.0
+resource_regen_per_s = 0.0
+max_health = 260.0
+armour = 80.0
+move_speed = 6.2
+attr_str = 15
+attr_dex = 10
+attr_con = 14
+attr_int = 8
+attr_wis = 12
+attr_cha = 13
+basic_attack = &"vanguard_sword_strike"
+abilities = Array[StringName]([&"judgment_cleave", &"shield_rush", &"radiant_aegis", &"lance_of_dawn", &"leap_slam"])
+primer_types = Array[StringName]([&"sanctified", &"dazed"])
+finisher_type = &"impact"
+signature_name = "Oathbond"
+signature_text = "While your partner is within 8 m, 10% of the damage they take moves to your armour, up to 20% with CHA."
+specializations = PackedStringArray("Sunwarden", "Ashen Templar")

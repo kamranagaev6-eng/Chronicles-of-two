@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RuneDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/rune_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"chain"
+display_name = "Chain"
+category = &"form"
+description = "After a hit, jumps to the nearest unhit enemy within 8 m, twice, each dealing 15% less damage."
+requires_any_tags = Array[StringName]([&"projectile", &"line"])
+chain_count = 2
+damage_more = 0.85

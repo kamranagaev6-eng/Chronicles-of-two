@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"rain_call"
+display_name = "Rain Call"
+class_id = &"riftweaver"
+unlock_level = 6
+description = "Rain makes a wide Water surface and soaks everything under it."
+tag_label = "Surface"
+tags = Array[StringName]([&"area", &"surface"])
+delivery = &"ground_area"
+damage_type = &"cold"
+element = &"water"
+range_m = 12.0
+radius_m = 4.5
+windup_ticks = 14
+active_ticks = 1
+recovery_ticks = 12
+cancel_tick = 15
+cooldown_ticks = 600
+cost = 26.0
+move_multiplier = 0.4
+surface_element = &"water"
+surface_radius_m = 4.5
+status = &"wet"
+status_duration_s = 8.0
+rune_tags = Array[StringName]([&"area", &"surface"])

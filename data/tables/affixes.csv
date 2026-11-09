@@ -1,0 +1,47 @@
+affix_id,group,type,tier,min_ilvl,stat,min_val,max_val,allowed_slots,display_name
+p_phys_flat_t1,flat_phys,prefix,1,1,physical_flat,2,4,weapon;offhand,Glinting
+p_phys_flat_t2,flat_phys,prefix,2,6,physical_flat,5,8,weapon;offhand,Honed
+p_phys_flat_t3,flat_phys,prefix,3,12,physical_flat,9,14,weapon;offhand,Sharpened
+p_phys_flat_t4,flat_phys,prefix,4,22,physical_flat,15,22,weapon;offhand,Serrated
+p_phys_flat_t5,flat_phys,prefix,5,32,physical_flat,24,32,weapon;offhand,Masterwork
+p_phys_inc_t1,phys_inc,prefix,1,1,physical_damage_inc,0.05,0.08,weapon;gloves;amulet,Heavy
+p_phys_inc_t2,phys_inc,prefix,2,6,physical_damage_inc,0.09,0.13,weapon;gloves;amulet,Brawny
+p_phys_inc_t3,phys_inc,prefix,3,12,physical_damage_inc,0.14,0.19,weapon;gloves;amulet,Mighty
+p_phys_inc_t4,phys_inc,prefix,4,22,physical_damage_inc,0.20,0.27,weapon;gloves;amulet,Crushing
+p_phys_inc_t5,phys_inc,prefix,5,32,physical_damage_inc,0.28,0.36,weapon;gloves;amulet,Devastating
+p_spell_inc_t1,spell_inc,prefix,1,1,spell_damage_inc,0.05,0.08,weapon;offhand;ring;amulet,Rune-Carved
+p_spell_inc_t2,spell_inc,prefix,2,6,spell_damage_inc,0.09,0.13,weapon;offhand;ring;amulet,Arcane
+p_spell_inc_t3,spell_inc,prefix,3,12,spell_damage_inc,0.14,0.19,weapon;offhand;ring;amulet,Gilded
+p_spell_inc_t4,spell_inc,prefix,4,22,spell_damage_inc,0.20,0.27,weapon;offhand;ring;amulet,Astral
+p_spell_inc_t5,spell_inc,prefix,5,32,spell_damage_inc,0.28,0.36,weapon;offhand;ring;amulet,Transcendent
+p_crit_chance_t1,crit_chance,prefix,1,3,crit_chance_add,0.02,0.03,weapon;gloves;ring,Precise
+p_crit_chance_t2,crit_chance,prefix,2,10,crit_chance_add,0.04,0.05,weapon;gloves;ring,True-Aim
+p_crit_chance_t3,crit_chance,prefix,3,20,crit_chance_add,0.06,0.08,weapon;gloves;ring,Deadeye
+p_crit_mult_t1,crit_mult,prefix,1,5,crit_multiplier_add,0.10,0.15,weapon;amulet,Keen
+p_crit_mult_t2,crit_mult,prefix,2,15,crit_multiplier_add,0.16,0.25,weapon;amulet,Vicious
+p_crit_mult_t3,crit_mult,prefix,3,28,crit_multiplier_add,0.26,0.40,weapon;amulet,Lethal
+p_stagger_t1,stagger_inc,prefix,1,2,stagger_inc,0.08,0.12,weapon;offhand;gloves,Concussive
+p_stagger_t2,stagger_inc,prefix,2,10,stagger_inc,0.13,0.18,weapon;offhand;gloves,Impactful
+p_stagger_t3,stagger_inc,prefix,3,22,stagger_inc,0.19,0.28,weapon;offhand;gloves,Earthshaking
+s_health_t1,flat_hp,suffix,1,1,max_health,12,20,head;chest;boots;ring;amulet,of Health
+s_health_t2,flat_hp,suffix,2,6,max_health,22,35,head;chest;boots;ring;amulet,of Vitality
+s_health_t3,flat_hp,suffix,3,12,max_health,38,55,head;chest;boots;ring;amulet,of the Bear
+s_health_t4,flat_hp,suffix,4,22,max_health,60,85,head;chest;boots;ring;amulet,of Fortitude
+s_health_t5,flat_hp,suffix,5,32,max_health,90,120,head;chest;boots;ring;amulet,of Immortality
+s_armour_t1,flat_armour,suffix,1,1,armour,8,15,head;chest;gloves;boots;offhand,of Iron
+s_armour_t2,flat_armour,suffix,2,6,armour,16,28,head;chest;gloves;boots;offhand,of Steel
+s_armour_t3,flat_armour,suffix,3,12,armour,30,45,head;chest;gloves;boots;offhand,of Plating
+s_armour_t4,flat_armour,suffix,4,22,armour,50,70,head;chest;gloves;boots;offhand,of the Fortress
+s_armour_t5,flat_armour,suffix,5,32,armour,75,105,head;chest;gloves;boots;offhand,of the Bastion
+s_res_cold_t1,res_cold,suffix,1,1,resist_cold,0.06,0.10,head;chest;boots;ring,of Thawing
+s_res_cold_t2,res_cold,suffix,2,10,resist_cold,0.11,0.16,head;chest;boots;ring,of Warmth
+s_res_cold_t3,res_cold,suffix,3,22,resist_cold,0.17,0.25,head;chest;boots;ring,of the Hearth
+s_res_fire_t1,res_fire,suffix,1,1,resist_fire,0.06,0.10,head;chest;boots;ring,of Dousing
+s_res_fire_t2,res_fire,suffix,2,10,resist_fire,0.11,0.16,head;chest;boots;ring,of Extinction
+s_res_fire_t3,res_fire,suffix,3,22,resist_fire,0.17,0.25,head;chest;boots;ring,of Salamander
+s_move_t1,move_speed,suffix,1,3,move_speed_inc,0.04,0.06,boots;amulet,of Quickness
+s_move_t2,move_speed,suffix,2,14,move_speed_inc,0.07,0.10,boots;amulet,of Celerity
+s_move_t3,move_speed,suffix,3,26,move_speed_inc,0.11,0.15,boots;amulet,of the Zephyr
+s_bond_t1,bond_gain,suffix,1,2,bond_gain_inc,0.10,0.15,ring;amulet,of Kinship
+s_bond_t2,bond_gain,suffix,2,12,bond_gain_inc,0.16,0.25,ring;amulet,of Harmony
+s_bond_t3,bond_gain,suffix,3,25,bond_gain_inc,0.26,0.40,ring;amulet,of the Tetherbound

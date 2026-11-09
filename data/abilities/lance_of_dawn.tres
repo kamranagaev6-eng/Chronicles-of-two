@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"lance_of_dawn"
+display_name = "Lance of Dawn"
+class_id = &"vanguard"
+unlock_level = 3
+description = "Thrown radiant spear that pierces a line."
+tag_label = "Primer: Dazed"
+tags = Array[StringName]([&"projectile", &"primer"])
+primer = &"dazed"
+delivery = &"projectile"
+damage_type = &"holy"
+element = &"holy"
+base_damage = 16.0
+stagger = 8.0
+impulse = 2.0
+range_m = 16.0
+projectile_speed = 26.0
+projectile_radius = 0.35
+pierce = 99
+windup_ticks = 10
+active_ticks = 1
+recovery_ticks = 14
+cancel_tick = 14
+cooldown_ticks = 300
+move_multiplier = 0.3
+rune_tags = Array[StringName]([&"projectile"])

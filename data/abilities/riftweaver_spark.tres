@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"riftweaver_spark"
+display_name = "Hand Spark"
+class_id = &"riftweaver"
+description = "Light cast while the Rift Anchor is away: a weak spark."
+tag_label = "Light (anchor away)"
+tags = Array[StringName]([&"projectile", &"basic"])
+delivery = &"projectile"
+damage_type = &"lightning"
+base_damage = 5.0
+stagger = 2.0
+range_m = 11.0
+projectile_speed = 26.0
+projectile_radius = 0.2
+windup_ticks = 5
+active_ticks = 1
+recovery_ticks = 10
+cancel_tick = 8
+move_multiplier = 0.75
+rune_tags = Array[StringName]([&"projectile"])

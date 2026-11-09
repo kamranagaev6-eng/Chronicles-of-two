@@ -1,0 +1,9 @@
+primer,effect_id,name,element,radius,duration,magnitude,damage_scale,description
+dazed,concussion,Concussion,lightning,0,0,2,0,Double stagger damage from the hit
+sanctified,radiance,Radiance,holy,4,6,0.08,0.4,A holy burst; allies nearby gain a small barrier
+frozen,shatter,Shatter,cold,3,6,0.2,0.5,An ice-shard burst; struck enemies are Exposed for 6 s
+shocked,discharge,Discharge,lightning,6,0,4,0.5,Arcs to 4 nearby enemies; electrifies water
+marked,pinpoint,Pinpoint,,0,0,0.5,0,+50% crit chance on the hit; executes non-elites under 15% health
+envenomed,rupture,Rupture,poison,0,0,1.5,0.5,The remaining poison is dealt at once x1.5
+rooted,snap,Snap,nature,0,1.2,0,0,A launch with a 1.2 s juggle window
+terrified,panic_break,Panic Break,,3,1,0,0,The target bolts into its neighbours and knocks them down

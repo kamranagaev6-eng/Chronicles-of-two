@@ -1,0 +1,4 @@
+name,version,licence,source_url,location,notes
+Godot Engine,4.7.2-stable,MIT,https://github.com/godotengine/godot/releases/tag/4.7.2-stable,.engine/ (not committed),Godot_v4.7.2-stable_win64.exe.zip SHA-512 verified against SHA512-SUMS.txt
+GUT,9.7.1,MIT,https://github.com/bitwes/Gut/releases/tag/v9.7.1,addons/gut,Test framework; LICENSE.md included
+netfox,1.35.3,MIT,https://github.com/foxssake/netfox/releases/tag/v1.35.3,addons/netfox and addons/netfox.internals,Rollback prediction for hero movement and dodge; LICENSE included

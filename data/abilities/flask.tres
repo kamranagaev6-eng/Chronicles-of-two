@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"flask"
+display_name = "Healing Flask"
+class_id = &"any"
+description = "Drink to heal. Refills at Waystones."
+tag_label = "Universal"
+tags = Array[StringName]([&"flask"])
+delivery = &"flask"
+windup_ticks = 18
+active_ticks = 1
+recovery_ticks = 6
+cancel_tick = 24
+cooldown_ticks = 60
+move_multiplier = 0.5

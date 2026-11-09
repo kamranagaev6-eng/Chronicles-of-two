@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"shield_rush"
+display_name = "Shield Rush"
+class_id = &"vanguard"
+unlock_level = 1
+description = "Collision-aware charge that slams enemies into walls."
+tag_label = "Finisher: Impact"
+tags = Array[StringName]([&"charge", &"melee", &"finisher"])
+finisher = &"impact"
+delivery = &"charge"
+damage_type = &"physical"
+base_damage = 26.0
+stagger = 22.0
+impulse = 26.0
+radius_m = 1.1
+range_m = 4.0
+windup_ticks = 6
+active_ticks = 16
+recovery_ticks = 14
+cancel_tick = 30
+cooldown_ticks = 420
+resource_gain = 4.0
+move_multiplier = 0.0
+move_speed = 15.0
+move_ticks = 16
+rune_tags = Array[StringName]([&"charge", &"melee"])

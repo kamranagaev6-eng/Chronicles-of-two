@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ClassDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/class_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"riftweaver"
+display_name = "Riftweaver"
+epithet = "the Arcane Architect"
+description = "Elemental control and spatial magic: fragile up close, devastating at range."
+resource_id = &"flux"
+resource_label = "Flux"
+resource_max = 100.0
+resource_start = 100.0
+resource_regen_per_s = 14.0
+max_health = 190.0
+armour = 25.0
+move_speed = 6.4
+attr_str = 8
+attr_dex = 13
+attr_con = 12
+attr_int = 15
+attr_wis = 14
+attr_cha = 10
+basic_attack = &"riftweaver_rift_bolt"
+abilities = Array[StringName]([&"glacial_spire", &"arc_lance", &"blink", &"ember_orb", &"rain_call"])
+primer_types = Array[StringName]([&"frozen", &"shocked"])
+finisher_type = &"arcane"
+signature_name = "Elemental Weave"
+signature_text = "Casting a different element from your last spell refunds 15% of its cost."
+specializations = PackedStringArray("Chronarch", "Stormcaller")

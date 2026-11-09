@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"ember_orb"
+display_name = "Ember Orb"
+class_id = &"riftweaver"
+unlock_level = 3
+description = "Slow fire orb; sets Burning and ignites oil."
+tag_label = "Fire"
+tags = Array[StringName]([&"projectile", &"area", &"fire"])
+delivery = &"projectile"
+damage_type = &"fire"
+element = &"fire"
+base_damage = 20.0
+stagger = 6.0
+radius_m = 2.2
+range_m = 14.0
+projectile_speed = 9.0
+projectile_radius = 0.45
+windup_ticks = 10
+active_ticks = 1
+recovery_ticks = 12
+cancel_tick = 12
+cooldown_ticks = 240
+cost = 20.0
+move_multiplier = 0.35
+surface_element = &"fire"
+surface_radius_m = 2.2
+status = &"burning"
+status_duration_s = 4.0
+status_magnitude = 6.0
+rune_tags = Array[StringName]([&"projectile", &"area"])

@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/enemy_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"drowned_abbess"
+display_name = "The Drowned Abbess"
+rank = &"boss"
+undead = true
+mass_class = &"heavy"
+max_health = 1600.0
+armour = 160.0
+resist_cold = 0.4
+resist_holy = -0.2
+stagger_max = 350.0
+move_speed = 1.6
+radius = 0.8
+height = 2.8
+token_kind = &"ranged"
+attack_kind = &"arrow"
+attack_range = 16.0
+preferred_range = 10.0
+telegraph_ticks = 48
+active_ticks = 6
+recovery_ticks = 60
+attack_damage = 40.0
+attack_damage_type = &"cold"
+attack_radius = 2.0
+projectile_speed = 14.0
+xp = 350
+leash_radius = 2.5
+ward_multiplier = 0.35
+body_color = Color(0.18, 0.28, 0.38, 1)
+accent_color = Color(0.3, 0.85, 0.95, 1)

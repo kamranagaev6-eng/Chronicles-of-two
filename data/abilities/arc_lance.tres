@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"arc_lance"
+display_name = "Arc Lance"
+class_id = &"riftweaver"
+unlock_level = 1
+description = "Lightning lance; electrifies water it crosses."
+tag_label = "Finisher: Arcane"
+tags = Array[StringName]([&"line", &"finisher"])
+finisher = &"arcane"
+delivery = &"line"
+damage_type = &"lightning"
+element = &"lightning"
+base_damage = 24.0
+stagger = 10.0
+range_m = 14.0
+radius_m = 0.6
+pierce = 2
+windup_ticks = 8
+active_ticks = 1
+recovery_ticks = 12
+cancel_tick = 12
+cooldown_ticks = 150
+cost = 22.0
+move_multiplier = 0.35
+surface_element = &"lightning"
+surface_radius_m = 0.6
+rune_tags = Array[StringName]([&"line"])

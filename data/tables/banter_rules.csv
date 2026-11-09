@@ -1,0 +1,42 @@
+rule_id,concept,speaker,target_hp,tether,region,priority,cooldown_s,text,reply_rule
+save_vg_01,save_low_health,vanguard,low,any,any,5,45,"I had that under control, but thanks!",save_rw_reply_01
+save_rw_reply_01,reply,riftweaver,any,any,any,10,0,"You're welcome. Try not to test my reflexes twice in a minute.",
+save_rw_01,save_low_health,riftweaver,low,any,any,5,45,"A second later and that would have left a mark.",save_vg_reply_01
+save_vg_reply_01,reply,vanguard,any,any,any,10,0,"Good thing my shield has your schedule memorized.",
+rescue_vg_01,rescue_partner,vanguard,any,any,any,6,60,"Remind me to buy you dinner for that one.",rescue_rw_reply_01
+rescue_rw_reply_01,reply,riftweaver,any,any,any,10,0,"I'm holding you to that. Somewhere with hot bread.",
+rescue_rw_01,rescue_partner,riftweaver,any,any,any,6,60,"On your feet, hero. We haven't finished this page.",rescue_vg_reply_02
+rescue_vg_reply_02,reply,vanguard,any,any,any,10,0,"Never in doubt with you beside me.",
+res_shatter_01,resonance_shatterfall,vanguard,any,any,any,4,20,"Shards everywhere! That's the shatter!",res_shatter_reply_01
+res_shatter_reply_01,reply,riftweaver,any,any,any,10,0,"You froze them in place; I just delivered the punchline.",
+res_thunder_01,resonance_thunderclap,riftweaver,any,any,any,4,20,"Thunderclap! The whole pool is dancing!",res_thunder_reply_01
+res_thunder_reply_01,reply,vanguard,any,any,any,10,0,"Lightning looks good on your side of the fight.",
+res_gen_vg_01,resonance_generic,vanguard,any,any,any,2,15,"Resonance! Perfect timing!",
+res_gen_rw_01,resonance_generic,riftweaver,any,any,any,2,15,"Right on cue!",
+slam_vg_01,enemy_wall_slam,vanguard,any,any,any,3,25,"Into the masonry! That's gotta hurt.",
+slam_rw_01,enemy_wall_slam,riftweaver,any,any,any,3,25,"Mind the architecture, darling.",
+stagger_boss_01,boss_staggered,any,any,any,any,6,30,"It's reeling! Double Tech window, now!",
+stagger_boss_02,boss_staggered,riftweaver,any,any,any,7,30,"Staggered! Hit it with everything we have!",
+double_ready_01,double_tech_ready,any,any,any,any,4,45,"Bond meter's peaked! Call the Double Tech whenever you're ready.",
+double_fire_01,double_tech_fire,vanguard,any,any,any,5,60,"Together! Hearthflare!",
+double_fire_02,double_tech_fire,riftweaver,any,any,any,5,60,"Two halves, one strike!",
+tether_strain_01,tether_strained,riftweaver,any,any,any,3,30,"Tether's stretching thin, keep within reach!",
+tether_drop_01,tether_broken,vanguard,any,any,any,4,40,"You're drifting too far! Get back inside the light!",tether_drop_reply_01
+tether_drop_reply_01,reply,riftweaver,any,any,any,10,0,"Working on it! Had a few thralls to clear first.",
+tether_restored_01,tether_restored,any,any,any,any,3,30,"Tether's locked back in. Good to have you close.",
+crypt_entry_01,crypt_entrance,vanguard,any,any,sunken_crypt,7,120,"Cold down here. Smells of drowned stone and old ink.",crypt_entry_reply_01
+crypt_entry_reply_01,reply,riftweaver,any,any,sunken_crypt,10,0,"Watch the slick flagstones. The Abbess has had centuries to flood this place.",
+crypt_water_01,crypt_water_deep,riftweaver,any,any,sunken_crypt,5,90,"If we step in the water, shock or freeze will travel through the whole channel.",
+crypt_water_02,crypt_water_deep,vanguard,any,any,sunken_crypt,5,90,"Then we freeze the surface first and make our own road.",
+bellkeeper_intro_01,bellkeeper_encounter,vanguard,any,any,sunken_crypt,8,300,"Look at the size of that bell. If we slam him into it, the chime will rattle his bones.",bellkeeper_reply_01
+bellkeeper_reply_01,reply,riftweaver,any,any,sunken_crypt,10,0,"Ring his bell for him. I'll line up the frost.",
+abbess_intro_01,abbess_encounter,riftweaver,any,any,sunken_crypt,8,300,"The Drowned Abbess. Those iron anchors keep the floor anchored against the tide.",abbess_reply_01
+abbess_reply_01,reply,vanguard,any,any,sunken_crypt,10,0,"Break the anchors, turn the sluice, and she won't have anywhere to hide.",
+sluice_puzzle_01,puzzle_sluice,vanguard,any,any,sunken_crypt,6,120,"I'll hold the sluice wheel! You cross the dry channel and clear the gate!",sluice_reply_01
+sluice_reply_01,reply,riftweaver,any,any,sunken_crypt,10,0,"Moving! Don't let go until I'm on solid flagstone!",
+flask_shared_01,flask_shared,vanguard,any,any,any,3,40,"Took a sip, saved the rest for you.",
+flask_shared_02,flask_shared,riftweaver,any,any,any,3,40,"Warm brew. Tastes like home hearth honey.",
+idle_quiet_01,idle_quiet,riftweaver,healthy,connected,sunken_crypt,2,180,"Still quiet. Listen to the drops echoing off the vaulting.",idle_quiet_reply_01
+idle_quiet_reply_01,reply,vanguard,any,any,sunken_crypt,10,0,"A quiet breath before the next wave. I like having you here.",
+idle_quiet_02,idle_quiet,vanguard,healthy,connected,emberrest,2,180,"The hearth fire's warm tonight. Look at the stars above the chimney.",idle_quiet_reply_02
+idle_quiet_reply_02,reply,riftweaver,any,any,emberrest,10,0,"One more star rekindled. Because we went out together.",

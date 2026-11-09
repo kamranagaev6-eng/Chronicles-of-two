@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"judgment_cleave"
+display_name = "Judgment Cleave"
+class_id = &"vanguard"
+unlock_level = 1
+description = "Sweeping strike; leaves consecrated ground that ignites oil."
+tag_label = "Primer: Sanctified"
+tags = Array[StringName]([&"melee", &"area", &"primer"])
+primer = &"sanctified"
+delivery = &"melee_arc"
+damage_type = &"holy"
+element = &"holy"
+base_damage = 22.0
+stagger = 10.0
+impulse = 4.0
+range_m = 3.0
+arc_deg = 150.0
+windup_ticks = 10
+active_ticks = 4
+recovery_ticks = 16
+cancel_tick = 20
+cooldown_ticks = 360
+resource_gain = 4.0
+move_multiplier = 0.3
+surface_element = &"holy"
+surface_radius_m = 1.8
+rune_tags = Array[StringName]([&"melee", &"area"])

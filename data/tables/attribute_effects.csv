@@ -1,0 +1,15 @@
+attribute,stat,per_point,description
+# Each point above 10 adds per_point to the stat (below 10 subtracts). Combat uses gear-inclusive scores; roleplay checks never use this table.
+str,physical_damage_inc,0.02,Increased physical damage
+str,stagger_inc,0.02,Increased stagger damage
+str,impulse_inc,0.03,Increased knockback and shove force
+dex,crit_chance_add,0.005,Added critical strike chance
+dex,dodge_distance_inc,0.015,Increased dodge distance
+con,max_health_inc,0.03,Increased maximum health
+con,stagger_resist_inc,0.02,Reduced stagger taken
+int,spell_damage_inc,0.02,Increased non-physical damage
+int,surface_area_inc,0.02,Increased surface size
+wis,resource_regen_inc,0.03,Increased resource regeneration
+wis,control_duration_inc,0.02,Increased control duration
+cha,link_strength_inc,0.02,Increased link and aura strength
+cha,oathbond_share_add,0.01,Added Oathbond share (capped by rules)

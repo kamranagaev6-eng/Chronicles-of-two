@@ -1,0 +1,17 @@
+# Godot cache and per-user editor state
+.godot/
+*.translation
+
+# Engine binaries kept locally (see tools/godot_path.ps1)
+.engine/
+
+# Builds and tool output
+/build/
+/export/
+/tools/out/
+*.tmp
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store

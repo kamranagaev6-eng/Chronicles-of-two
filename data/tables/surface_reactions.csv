@@ -1,0 +1,22 @@
+material,element,result,base_after,add_flags,clear_flags,event,duration_s
+# result: material after the reaction. duration_s > 0 reverts to the cell's base material afterwards; 0 is permanent.
+# base_after: replaces the cell's base material (e.g. burnt oil is gone for good).
+water,fire,water,,,electrified,steam,0
+water,cold,ice,,,electrified,freeze,8
+water,lightning,water,,electrified,,electrify,4
+water,holy,water,,blessed,,bless,8
+ice,fire,water,,,,melt,0
+ice,cold,ice,,,,refresh,8
+ice,lightning,water,,,,shatter,0
+oil,fire,burning,none,,,explode,6
+oil,lightning,burning,none,,,ignite,6
+oil,holy,burning,none,,,ignite,6
+burning,fire,burning,,,,refresh,6
+burning,cold,water,none,,,extinguish,6
+sanctified,fire,none,none,,,ashen,0
+sanctified,holy,sanctified,,,,refresh,8
+none,holy,sanctified,,,,consecrate,8
+none,fire,burning,,,,scorch,2
+none,water,water,,,,rain,10
+water,water,water,,,,refresh,10
+burning,water,water,none,,,extinguish,10

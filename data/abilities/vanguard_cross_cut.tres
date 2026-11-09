@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"vanguard_cross_cut"
+display_name = "Cross Cut"
+class_id = &"vanguard"
+description = "Second light strike: a wider return slash."
+tag_label = "Light 2"
+tags = Array[StringName]([&"melee", &"basic"])
+delivery = &"melee_arc"
+base_damage = 16.0
+stagger = 7.0
+impulse = 3.0
+range_m = 2.4
+arc_deg = 130.0
+windup_ticks = 5
+active_ticks = 3
+recovery_ticks = 12
+cancel_tick = 11
+resource_gain = 4.0
+move_multiplier = 0.55
+rune_tags = Array[StringName]([&"melee"])

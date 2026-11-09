@@ -1,0 +1,10 @@
+table_id,tier,enemy_rank,common_weight,enchanted_weight,rare_weight,relic_weight,min_materials,max_materials
+crypt_trash_t1,1,normal,70,28,2,0,1,2
+crypt_trash_t2,2,normal,50,42,8,0,2,4
+crypt_elite_t1,1,elite,20,55,24,1,3,6
+crypt_elite_t2,2,elite,10,45,42,3,5,9
+crypt_boss_t1,1,boss,0,30,65,5,8,14
+crypt_boss_t2,2,boss,0,15,75,10,12,20
+crypt_chest_t1,1,normal,30,50,19,1,2,5
+crypt_chest_t2,2,normal,15,45,37,3,4,8
+emberrest_salvage,1,normal,100,0,0,0,1,3

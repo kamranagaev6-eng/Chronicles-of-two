@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RuneDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/rune_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"attune"
+display_name = "Attune"
+category = &"bond"
+description = "For 6 s, your partner's next skill takes this skill's element."
+attune_seconds = 6.0

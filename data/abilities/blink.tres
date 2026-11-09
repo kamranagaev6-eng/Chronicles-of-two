@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/ability_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"blink"
+display_name = "Blink"
+class_id = &"riftweaver"
+unlock_level = 2
+description = "Short teleport to a valid spot."
+tag_label = "Mobility"
+tags = Array[StringName]([&"blink", &"mobility"])
+delivery = &"blink"
+range_m = 7.0
+windup_ticks = 3
+active_ticks = 1
+recovery_ticks = 6
+cancel_tick = 6
+cooldown_ticks = 240
+cost = 15.0
+move_multiplier = 0.0
+rune_tags = Array[StringName]([&"blink"])

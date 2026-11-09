@@ -1,0 +1,8 @@
+expedition,order,room,kind,encounter,xp,label,hint
+# kind: combat (waves), puzzle (two plates held together), elite (Bellkeeper), shrine (rune), boss (Abbess)
+sunken_crypt,1,entrance,combat,crypt_entrance,450,The Flooded Entrance,"One of you primes, the other finishes: Glacial Spire then Shield Rush, or Lance of Dawn then Arc Lance."
+sunken_crypt,2,chapel,combat,crypt_chapel,650,The Drowned Chapel,"Water freezes, oil burns, lightning runs through whole pools. Break barrels to make your own."
+sunken_crypt,3,sluice,puzzle,,400,The Sluice Gates,"Stand on both sluice plates together to open the gate. Either of you can take either plate."
+sunken_crypt,4,belfry,elite,crypt_belfry,900,The Belfry,"The Bellkeeper tolls its bell. While it stands beside the bell, shove or rush it into the bell to Stagger it."
+sunken_crypt,5,shrine,shrine,,200,The Rune Shrine,"Take the rune at the shrine and try it on the dummies before the Abbess."
+sunken_crypt,6,basin,boss,crypt_basin,1600,The Abbess's Basin,"Floods hide her anchors: turn a sluice wheel or freeze the water, break the anchors, then strike while she is Staggered."

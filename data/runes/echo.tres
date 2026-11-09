@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RuneDefinition" format=3]
+
+[ext_resource type="Script" path="res://game/data/defs/rune_definition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"echo"
+display_name = "Echo"
+category = &"form"
+description = "Repeats the ability's impact after a 0.4 s delay at 40% damage. Echoes never apply primers or trigger reactions."
+requires_any_tags = Array[StringName]([&"area", &"melee", &"projectile", &"line", &"charge"])
+excludes_tags = Array[StringName]([&"support", &"blink"])
+echo_delay_s = 0.4
+echo_damage_fraction = 0.4
