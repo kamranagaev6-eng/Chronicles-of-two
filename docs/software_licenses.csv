@@ -2,3 +2,5 @@ name,version,licence,source_url,location,notes
 Godot Engine,4.7.2-stable,MIT,https://github.com/godotengine/godot/releases/tag/4.7.2-stable,.engine/ (not committed),Godot_v4.7.2-stable_win64.exe.zip SHA-512 verified against SHA512-SUMS.txt
 GUT,9.7.1,MIT,https://github.com/bitwes/Gut/releases/tag/v9.7.1,addons/gut,Test framework; LICENSE.md included
 netfox,1.35.3,MIT,https://github.com/foxssake/netfox/releases/tag/v1.35.3,addons/netfox and addons/netfox.internals,Rollback prediction for hero movement and dodge; LICENSE included
+Blender,5.2.3 LTS,GPL-2.0-or-later,https://download.blender.org/release/Blender5.2/,.engine/blender/ (not committed),Build tool for characters only and not shipped with the game; portable zip SHA-256 verified against blender-5.2.3.sha256
+MPFB,2.0.18,GPL-3.0-or-later,https://extensions.blender.org/add-ons/mpfb/,.engine/blender/ (not committed),MakeHuman add-on for Blender; build tool only and not shipped; its core assets are CC0; archive hash verified against the extensions index

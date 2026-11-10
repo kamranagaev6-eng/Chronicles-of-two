@@ -15,3 +15,6 @@
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Python bytecode from the character build scripts
+/tools/characters/blender/__pycache__/

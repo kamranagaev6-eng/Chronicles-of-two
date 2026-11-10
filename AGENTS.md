@@ -21,7 +21,8 @@ The owner's action-adventure direction (`docs/design/direction_action_adventure.
 - Every system ships with tests run through `godot --headless` (GUT), plus the scene-load smoke test.
   Never change a test's expected values just to make it pass.
 - Commit `.import` sidecar files (they are source configuration) but change import settings only through
-  the editor. Data CSVs must use the **Keep File** importer. Never commit `.godot/`.
+  the editor. Exception: the .import files of character and animation GLBs under assets/characters and
+  assets/animations are written by tools/characters/godot/write_imports.gd, never by hand. Data CSVs must use the **Keep File** importer. Never commit `.godot/`.
 - Every file under `/assets` needs a row in `docs/license_ledger.csv` (CC0 or original work; anything else
   needs a written yes from the owners). Software/add-on licences go in `docs/software_licenses.csv`.
 - One system per pull request; a human reviews every visual change.
@@ -34,6 +35,7 @@ The owner's action-adventure direction (`docs/design/direction_action_adventure.
 | `game/data` | Typed definition Resources and CSV loaders (`GameData` autoload) |
 | `game/combat` | Damage formula, primers/Resonance, stagger, knockback, abilities, projectiles |
 | `game/character` | Hero node, deterministic `HeroMotor`, input gathering, hero stats |
+| `game/characters` | Character kit: rigs, animation drivers, import settings, review scene |
 | `game/world` | Surface grid, Bond Tether, Waystones, props |
 | `game/encounter` | Enemies, AI, Combat Director, flow fields, encounter waves |
 | `game/net` | Session (host/join/pause/reconnect), message codecs, snapshots, net stats |
@@ -41,8 +43,10 @@ The owner's action-adventure direction (`docs/design/direction_action_adventure.
 | `game/presentation` | Camera, HUD, hit feel, SFX, VFX, overlays |
 | `game/scenes` | Boot menu, lobby, M1 arena, M0 asset test scene |
 | `data/` | `tables/*.csv` (tabular data) and `abilities|classes|enemies|runes/*.tres` (definitions) |
+| `art/characters` | Character and clip definitions; build inputs, not scanned by Godot |
 | `tests/` | GUT tests (`unit/`, `integration/`) |
 | `tools/` | Ledger checker, data validator, test runner, two-instance launcher, soak test |
+| `tools/characters` | Blender and Godot scripts behind `build_characters.ps1` |
 | `docs/godot_api/` | Godot 4.7 class reference generated with `--doctool`: search it for real APIs |
 
 ## Commands (PowerShell, from the repo root)
@@ -51,6 +55,7 @@ The owner's action-adventure direction (`docs/design/direction_action_adventure.
 ./tools/run_tests.ps1              # import, GUT, data validation, ledger check
 ./tools/launch_two.ps1             # host + guest windows on this PC
 ./tools/soak.ps1 -Seconds 60       # headless host + bot guest, reports corrections
+./tools/build_characters.ps1 -All   # rebuild characters (needs ./tools/fetch_character_tools.ps1 once)
 ```
 
 The engine lives in `.engine/` (ignored by git and Godot). `tools/godot_path.ps1` resolves it.

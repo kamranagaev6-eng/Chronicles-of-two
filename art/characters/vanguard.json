@@ -1,0 +1,42 @@
+{
+  "id": "vanguard",
+  "height_m": 1.8,
+  "body": {"gender": 1.0, "age": 0.6, "muscle": 0.85, "weight": 0.56, "proportions": 0.72, "height": 0.55,
+           "race": {"asian": 0.0, "caucasian": 1.0, "african": 0.0}},
+  "skin": "middleage_caucasian_male",
+  "hair": "short02", "eyes": "low-poly", "eyebrows": "eyebrow001", "eyelashes": "eyelashes01",
+  "shoes": "shoes04",
+  "outfit": [
+    {"name": "gambeson", "helper": "helper-tights", "bones": null, "cuts": [],
+     "offset": 0.002, "thickness": 0.0, "material": "cloth", "tile_m": 0.25, "hides_body": true},
+    {"name": "cuirass", "helper": "helper-tights", "bones": "torso",
+     "cuts": [["z_above", "spine_01", 0.02], ["z_below", "neck_01", -0.035]],
+     "offset": 0.016, "thickness": 0.006, "material": "steel_plate"},
+    {"name": "belt", "helper": "helper-tights", "bones": "torso_and_thighs",
+     "cuts": [["z_above", "spine_01", -0.055], ["z_below", "spine_01", 0.03]],
+     "offset": 0.026, "thickness": 0.007, "material": "leather", "tile_m": 0.3},
+    {"name": "kilt", "helper": "helper-skirt", "bones": null,
+     "cuts": [["z_above", "calf_l", 0.16], ["z_below", "spine_01", -0.02]],
+     "offset": 0.006, "thickness": 0.004, "material": "leather", "tile_m": 0.4},
+    {"name": "tabard_back", "helper": "helper-tights", "bones": "torso",
+     "cuts": [["y_behind", 0.0], ["x_inside", 0.12], ["z_above", "spine_01", 0.0], ["z_below", "spine_03", 0.0]],
+     "offset": 0.024, "thickness": 0.003, "material": "accent_trim"},
+    {"name": "pauldron", "sides": true, "helper": "helper-tights", "bones": ["clavicle", "upperarm"],
+     "cuts": [["along_before", "upperarm", 0.5], ["x_outside", 0.085]],
+     "offset": 0.03, "thickness": 0.006, "material": "steel_plate"},
+    {"name": "bracer", "sides": true, "helper": "helper-tights", "bones": ["lowerarm"],
+     "cuts": [["along_after", "lowerarm", 0.14], ["along_before", "lowerarm", 0.9]],
+     "offset": 0.011, "thickness": 0.005, "material": "steel_plate"},
+    {"name": "greave", "sides": true, "helper": "helper-tights", "bones": ["calf"],
+     "cuts": [["along_after", "calf", 0.07], ["along_before", "calf", 0.86]],
+     "offset": 0.012, "thickness": 0.005, "material": "steel_plate"},
+    {"name": "helm", "layer": "headgear", "helper": "helper-hair", "bones": null, "cuts": [],
+     "offset": 0.012, "thickness": 0.004, "material": "steel_plate"},
+    {"name": "crest", "layer": "headgear", "helper": "helper-hair", "bones": null, "cuts": [["x_inside", 0.012]],
+     "offset": 0.028, "thickness": 0.006, "material": "accent_trim"}
+  ],
+  "props": [
+    {"name": "Prop_Sword", "generator": "arming_sword", "socket": "right_hand_grip", "length": 0.9},
+    {"name": "Sig_Oathshield", "generator": "round_shield", "socket": "left_forearm", "radius": 0.37}
+  ]
+}

@@ -50,6 +50,8 @@ Water freezes, oil burns, lightning electrifies whole pools, and enemies slammed
 ./tools/run_tests.ps1          # pinned-engine import, GUT (unit + integration), data validation, licence ledger
 ./tools/soak.ps1 -Seconds 90   # headless host + headless guest, both bots, over loopback; prints a report
 ./tools/launch_two.ps1         # host and guest windows side by side on this PC (separate profiles/saves)
+./tools/build_characters.ps1 -All # rebuild characters (run ./tools/fetch_character_tools.ps1 once first)
+& ./.engine/Godot_v4.7.2-stable_win64_console.exe --path . --resolution 2400x1000 res://game/characters/review/character_review.tscn -- --character=vanguard --sheet=turnaround --out="$PWD/tools/out/characters_pr1/turnaround.png" --profile=character_check  # --sheet= takes turnaround, moves or cost; cost also needs --size=<W>x<H> (e.g. 3440x1440), no --resolution
 ```
 
 Command-line switches (after `--`): `--host`, `--join=ADDRESS`, `--port=N`, `--solo`, `--profile=NAME`

@@ -1,0 +1,27 @@
+clip_set,role,clip,start_s,contact_s,end_s,layer,loop,speed_mps,notes
+vanguard,idle,ual1/Sword_Idle,0,0,1.67,full,1,0,
+vanguard,walk,ual1/Walk,0,0,1.33,full,1,0.97,
+vanguard,jog,ual1/Jog_Fwd,0,0,0.93,full,1,5.36,
+vanguard,sprint,ual1/Sprint,0,0,0.67,full,1,8.25,
+vanguard,block,ual2/Idle_Shield,0,0,2.5,upper_when_moving,1,0,
+vanguard,dodge,ual1/Roll,0.45,1.0,1.47,full,0,0,contact marks the end of the tumble
+vanguard,hit,ual1/Hit_Chest,0,0.05,0.33,upper,0,0,
+vanguard,get_up,ual2/LayToIdle,0.37,0.37,1.53,full,0,0,plays in real time
+vanguard,downed_idle,extra/Prone_Hold,0,0,0.5,full,1,0,
+vanguard,downed_crawl,extra/Downed_Crawl,0,0,1.6,full,1,0.75,
+vanguard,dead,ual1/Death01,0,0.93,2.4,full,0,0,held on its last frame
+vanguard,finisher,extra/Finisher_Blow,0,0.38,0.9,full,0,0,
+vanguard,action_default,ual2/Sword_Regular_A,0,0.25,0.43,upper_when_moving,0,0,
+vanguard,ability:vanguard_sword_strike,ual2/Sword_Regular_A,0,0.25,0.43,upper_when_moving,0,0,
+vanguard,ability:vanguard_cross_cut,ual2/Sword_Regular_B,0.05,0.27,0.53,upper_when_moving,0,0,
+vanguard,ability:vanguard_overhead,ual2/Sword_Regular_C,0.25,0.65,1.2,full,0,0,
+vanguard,ability:vanguard_shield_smash,ual2/Shield_OneShot,0,0.1,0.83,full,0,0,
+vanguard,ability:oathshield_throw,ual2/OverhandThrow,0,0.28,0.7,full,0,0,
+vanguard,ability:oathshield_recall,extra/Catch,0,0,0.3,upper,0,0,
+vanguard,ability:judgment_cleave,ual1/Sword_Attack,0,0.4,1.0,full,0,0,
+vanguard,ability:shield_rush,ual2/Shield_Dash,0,0.07,1.1,full,0,0,
+vanguard,ability:radiant_aegis,ual2/Idle_Shield_Break,0,0.1,0.6,full,0,0,
+vanguard,ability:lance_of_dawn,ual2/OverhandThrow,0,0.28,0.8,full,0,0,
+vanguard,ability:leap_slam,extra/Leap_Slam,0,0.2,0.92,full,0,0,contact is the take-off
+vanguard,ability:flask,ual2/Consume,0,0.6,1.0,upper,0,0,
+vanguard,ability:shove,ual2/Melee_Hook,0.1,0.27,0.47,upper_when_moving,0,0,
