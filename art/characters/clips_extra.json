@@ -1,0 +1,13 @@
+{"clips": [
+  {"name": "Prone_Hold", "op": "pose_loop", "from": "ual2/LayToIdle", "at": 0.0, "length": 0.5, "sway": []},
+  {"name": "Downed_Crawl", "op": "pose_loop", "from": "ual2/LayToIdle", "at": 0.0, "length": 1.6, "sway": [
+    {"bone": "LeftUpperArm", "axis": [1, 0, 0], "degrees": 22, "phase": 0.0},
+    {"bone": "RightUpperArm", "axis": [1, 0, 0], "degrees": 22, "phase": 0.5},
+    {"bone": "Spine", "axis": [0, 1, 0], "degrees": 6, "phase": 0.25}]},
+  {"name": "Catch", "op": "pose_loop", "from": "ual2/OverhandThrow", "at": 0.45, "length": 0.3, "sway": []},
+  {"name": "Finisher_Blow", "op": "slice", "from": "ual2/Sword_Heavy_Combo", "start": 0.0, "end": 0.9},
+  {"name": "Leap_Slam", "op": "sequence", "crossfade": 0.05, "parts": [
+    {"from": "ual1/Jump_Start", "start": 0.0, "end": 0.2},
+    {"from": "ual1/Jump", "start": 0.0, "end": 0.42},
+    {"from": "ual1/Jump_Land", "start": 0.1, "end": 0.4}]}
+]}

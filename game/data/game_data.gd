@@ -26,6 +26,8 @@ var attribute_effects: Array[Dictionary] = []
 var xp_rows: Array[Dictionary] = []
 var waves_by_encounter: Dictionary = {}   # StringName -> Array (index = wave-1) of Array[Dictionary]
 var rooms_by_expedition: Dictionary = {}  # StringName -> Array[Dictionary] ordered by "order"
+var character_roster: Dictionary = {}     # "for_kind|for_id" -> character and clip set row
+var character_clips: Dictionary = {}      # StringName (clip_set) -> Array[Dictionary]
 
 var abilities: Dictionary = {}            # StringName -> AbilityDefinition
 var classes: Dictionary = {}              # StringName -> ClassDefinition
@@ -229,6 +231,20 @@ func _load_tables() -> void:
 		rooms_by_expedition[exp] = list
 	for exp: StringName in rooms_by_expedition.keys():
 		(rooms_by_expedition[exp] as Array).sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a["order"]) < int(b["order"]))
+
+	var roster_table: CsvTable = _table("character_roster.csv", {"for_kind": T.NAME, "for_id": T.NAME,
+		"character": T.NAME, "clip_set": T.NAME})
+	for row: Dictionary in roster_table.rows:
+		character_roster["%s|%s" % [row["for_kind"], row["for_id"]]] = row
+
+	var clips_table: CsvTable = _table("character_clips.csv", {"clip_set": T.NAME, "role": T.NAME,
+		"clip": T.NAME, "start_s": T.FLOAT, "contact_s": T.FLOAT, "end_s": T.FLOAT,
+		"layer": T.NAME, "loop": T.BOOL, "speed_mps": T.FLOAT, "notes": T.STRING})
+	for row: Dictionary in clips_table.rows:
+		var clip_set: StringName = row["clip_set"]
+		if not character_clips.has(clip_set):
+			character_clips[clip_set] = [] as Array[Dictionary]
+		(character_clips[clip_set] as Array[Dictionary]).append(row)
 
 
 func _load_definitions() -> void:

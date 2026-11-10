@@ -1,0 +1,21 @@
+{
+  "id": "vanguard",
+  "definition_sha256": "56604998f9c93dbbee90e63a8c488701648f45b52a0400e5aa4d70d6480bbdcf",
+  "built_height_m": 1.799999951850623,
+  "triangles": {
+    "Body": 33132,
+    "Headgear": 2168,
+    "HairFull": 3344,
+    "Prop_Sword": 308,
+    "Sig_Oathshield": 1476
+  },
+  "total_triangles": 40428,
+  "tools": {
+    "blender": "5.2.3",
+    "mpfb": "2.0.18"
+  },
+  "sockets": {
+    "Prop_Sword": "right_hand_grip",
+    "Sig_Oathshield": "left_forearm"
+  }
+}
